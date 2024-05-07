@@ -89,6 +89,40 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+
+  
+	# systemd timers
+
+  systemd.timers."bondcliq_get_trace" = {
+  wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar="*-*-* 04:00:00";
+      Unit = "bondcliq_get_trace.service";
+    };
+  };
+
+  systemd.services."bondcliq_get_trace" = {
+    script = ''
+		  #!/bin/sh
+      LOCAL_DIR="/home/tbrowne/data/trace_data/bondcliq"
+      remote_files=$(echo "@ls" | sftp -i /home/tbrowne/.ssh/bondcliq_sftp bqscendance@sftp.bondcliq.com)
+      echo $remote_files
+      cd $LOCAL_DIR
+      for file in $remote_files; do
+          if [[ ! -f "$file" ]]; then
+          # File does not exist locally, download it
+          echo "Downloading missing file: $file"
+          sftp -i /home/tbrowne/.ssh/bondcliq_sftp bqscendance@sftp.bondcliq.com:/$file $LOCAL_DIR
+      fi
+      done
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -96,5 +130,7 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+
+
 
 }
