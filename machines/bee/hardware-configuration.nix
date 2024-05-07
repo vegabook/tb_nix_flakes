@@ -16,7 +16,7 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/5f6ac8ae-3720-43a0-a333-e27842c58cc6";
       fsType = "btrfs";
-      options = [ "subvol=@" ];
+      options = [ "subvol=@" "compress=zlib" ];
     };
 
   fileSystems."/boot" =
@@ -28,6 +28,7 @@
   fileSystems."/mnt/sea5" =
     { device = "/dev/disk/by-uuid/c28edfd2-13ba-43e7-a294-19777348d069";
       fsType = "btrfs";
+      options = [ "compress=zlib:5" ];
     };
 
   swapDevices = [ ];
