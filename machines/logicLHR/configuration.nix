@@ -206,7 +206,7 @@ in
 
       backend ssh
 	mode tcp
-	server ipv6 [201:fb9:be9b:1b73:4f4e:8521:4920:57cd]:22
+	server ipv6 [204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:41111
     '';
   };
 
