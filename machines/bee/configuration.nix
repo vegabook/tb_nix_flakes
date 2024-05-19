@@ -15,7 +15,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "bee"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -77,6 +77,13 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  programs.bash.shellAliases = {
+    l = "ls -alh";
+    ll = "ls -l";
+    ls = "ls --color=tty";
+    vim = "nvim";
+  };
 
   # List services that you want to enable:
 
