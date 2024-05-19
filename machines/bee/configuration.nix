@@ -88,7 +88,31 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [
+      41111
+    ];
+    settings.PasswordAuthentication = false;
+  };
+
+  services.fail2ban = {
+     enable = true;
+     maxretry = 5; # Observe 5 violations before banning an IP
+     bantime = "12h"; # Set bantime to one day
+  };
+
+  services.yggdrasil = {
+    enable = true;
+    persistentKeys = true;
+    group = "wheel";
+    settings = {
+      Peers = [
+        tls://vpn.itrus.su:7992
+        quic://23.137.251.45:5222 
+      ];
+    };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
