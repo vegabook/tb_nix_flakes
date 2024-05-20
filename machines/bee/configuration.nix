@@ -92,6 +92,9 @@
     enable = true;
     ports = [
       41111
+      4001
+      4002
+      4003
     ];
     settings.PasswordAuthentication = false;
   };
