@@ -92,9 +92,6 @@
     enable = true;
     ports = [
       41111
-      4001
-      4002
-      4003
     ];
     settings.PasswordAuthentication = false;
   };
@@ -118,7 +115,11 @@
   };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 
+    4001
+    4002
+    4003
+  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
