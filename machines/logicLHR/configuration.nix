@@ -145,7 +145,7 @@ in
 
     virtualHosts."www.scendance.fr" = {
     	extraConfig = ''
-    	  reverse_proxy http://[201:fb9:be9b:1b73:4f4e:8521:4920:57cd]:4001
+    	  reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4001
     	'';
     };
     virtualHosts."scendance.fr".extraConfig = ''
@@ -162,15 +162,15 @@ in
     '';
 
     virtualHosts."suprabonds.com".extraConfig = ''
-	reverse_proxy http://[201:fb9:be9b:1b73:4f4e:8521:4920:57cd]:4002
+	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4002
     ''; 
     
     virtualHosts."signaliser.com".extraConfig = ''
-	reverse_proxy http://[201:fb9:be9b:1b73:4f4e:8521:4920:57cd]:4003
+	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4003
     ''; 
 
     virtualHosts."sabretruth.com".extraConfig = ''
-	reverse_proxy http://[201:fb9:be9b:1b73:4f4e:8521:4920:57cd]:4004
+	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4004
     ''; 
     virtualHosts."sabertruth.com".extraConfig = ''
       redir https://sabretruth.com{uri}
@@ -181,10 +181,6 @@ in
     virtualHosts."sabertruth.org".extraConfig = ''
       redir https://sabretruth.com{uri}
     '';
-
-    virtualHosts."crvm.io".extraConfig = ''
-	reverse_proxy http://[201:fb9:be9b:1b73:4f4e:8521:4920:57cd]:7007
-    ''; 
   };
 
   services.haproxy = {
