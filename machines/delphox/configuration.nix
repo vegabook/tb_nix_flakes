@@ -79,7 +79,7 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
-  users.mutableUsers = false; # users congruent with configuration
+  users.mutableUsers = true; # users congruent with configuration
   
   users.users.tbrowne = {
     isNormalUser = true;
