@@ -114,6 +114,10 @@
     };
   };
 
+  services.postgres = {
+    enable = true;
+  };
+
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 
     4001
