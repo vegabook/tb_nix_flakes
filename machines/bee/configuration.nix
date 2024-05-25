@@ -126,7 +126,11 @@
     4002
     4003
   ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedUDPPorts = [ 
+    4001
+    4002
+    4003
+  ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
