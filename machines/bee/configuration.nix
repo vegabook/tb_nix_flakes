@@ -45,9 +45,14 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
+
+trace: warning: The option `services.xserver.xkbVariant' defined in `/nix/store/17j3v30x400s5r85dvfypmv15zw2c7hb-source/machines/bee/configuration.nix' has been renamed to `services.xserver.xkb.variant'.
+trace: warning: The option `services.xserver.layout' defined in `/nix/store/17j3v30x400s5r85dvfypmv15zw2c7hb-source/machines/bee/configuration.nix' has been renamed to `services.xserver.xkb.layout'.
+
+
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tbrowne = {
