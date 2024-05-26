@@ -45,6 +45,7 @@
 
   # enable nix flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.allowed-users = [ "*" ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -73,8 +74,8 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+    xkb.layout = "us";
+    xkb.variant = "";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -91,7 +92,6 @@
   users.users.shafy = {
     isNormalUser = true;
     description = "Mohamed Abd El Shafy";
-    hashedPassword = "$6$3W72uSJfNEy2mvs3$ulX.6AEOrTRTR7cdZh2Bh2QWt22.HIFtsmRwYT0/f2M242QWeAEM04FREsx6gsIxXJLScCw71EgY93xedjD3U/";
     extraGroups = [];
     packages = with pkgs; [];
   };
@@ -107,6 +107,8 @@
     git
     tmux
     mkpasswd
+    postgresql
+    fail2ban
   ];
 
   programs.bash.shellAliases = {
