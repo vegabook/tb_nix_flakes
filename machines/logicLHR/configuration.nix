@@ -206,6 +206,33 @@ in
     '';
   };
 
+  systemd.timers."example_python_script" = {
+  wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "1m";
+      OnUnitActiveSec = "1m";
+      Unit = "example_python_script.service";
+    };
+  };
+
+  # example python script
+  systemd.services."example_python_script" = 
+  let
+    script = /home/tbrowne/scratch/outnum.py;
+  in {
+    path = with pkgs; [
+      git
+      (python311.withPackages (ps: with ps; [
+        numpy
+      ]))
+    ];
+    script = "python3 ${script}";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 ];
