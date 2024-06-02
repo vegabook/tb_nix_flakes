@@ -236,7 +236,7 @@ in
         psycopg2
         sqlalchemy
         selenium
-        webdrive-manager
+        webdriver-manager
       ]))
     ];
     script = "python3 ${script}";
