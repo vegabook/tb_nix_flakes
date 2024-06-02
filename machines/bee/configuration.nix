@@ -70,6 +70,18 @@
      htop
      tmux
      git
+     home-manager
+     bison
+     flex
+     fontforge
+     makeWrapper
+     pkg-config
+     gnumake
+     gcc
+     libiconv
+     autoconf
+     automake
+     libtool
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
