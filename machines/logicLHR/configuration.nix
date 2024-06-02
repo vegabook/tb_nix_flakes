@@ -226,7 +226,7 @@ in
         numpy 
         pandas 
         scipy 
-        sckit-learn 
+        scikit-learn 
         matplotlib
         ipython
         requests
