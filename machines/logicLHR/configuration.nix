@@ -223,7 +223,20 @@ in
     path = with pkgs; [
       git
       (python311.withPackages (ps: with ps; [
-        numpy
+        numpy 
+        pandas 
+        scipy 
+        sckit-learn 
+        matplotlib
+        ipython
+        requests
+        aiohttp
+        gql
+        pathlib2
+        psycopg2
+        sqlalchemy
+        selenium
+        webdrive-manager
       ]))
     ];
     script = "python3 ${script}";
