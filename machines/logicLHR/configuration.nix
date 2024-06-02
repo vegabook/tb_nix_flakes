@@ -15,7 +15,6 @@ in
 
 {
 
-
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -206,45 +205,45 @@ in
     '';
   };
 
-  systemd.timers."example_python_script" = {
-  wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "1m";
-      OnUnitActiveSec = "1m";
-      Unit = "example_python_script.service";
-    };
-  };
+  #systemd.timers."example_python_script" = {
+  #wantedBy = [ "timers.target" ];
+  #  timerConfig = {
+  #    OnBootSec = "1m";
+  #    OnUnitActiveSec = "1m";
+  #    Unit = "example_python_script.service";
+  #  };
+  #};
 
-  # example python script
-  systemd.services."example_python_script" = 
-  let
-    script = /home/tbrowne/scratch/outnum.py;
-  in {
-    path = with pkgs; [
-      git
-      (python311.withPackages (ps: with ps; [
-        numpy 
-        pandas 
-        scipy 
-        scikit-learn 
-        matplotlib
-        ipython
-        requests
-        aiohttp
-        gql
-        pathlib2
-        psycopg2
-        sqlalchemy
-        selenium
-        webdriver-manager
-      ]))
-    ];
-    script = "python3 ${script}";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "root";
-    };
-  };
+  ## example python script
+  #systemd.services."example_python_script" = 
+  #let
+  #  script = /home/tbrowne/scratch/outnum.py;
+  #in {
+  #  path = with pkgs; [
+  #    git
+  #    (python311.withPackages (ps: with ps; [
+  #      numpy 
+  #      pandas 
+  #      scipy 
+  #      scikit-learn 
+  #      matplotlib
+  #      ipython
+  #      requests
+  #      aiohttp
+  #      gql
+  #      pathlib2
+  #      psycopg2
+  #      sqlalchemy
+  #      selenium
+  #      webdriver-manager
+  #    ]))
+  #  ];
+  #  script = "python3 ${script}";
+  #  serviceConfig = {
+  #    Type = "oneshot";
+  #    User = "root";
+  #  };
+  #};
 
 
   # Open ports in the firewall.

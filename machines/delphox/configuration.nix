@@ -119,6 +119,45 @@
     vim="nvim";
   };
 
+  systemd.timers."delphoai_news_sources_runner" = {
+  wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5m";
+      OnUnitActiveSec = "3h";
+      Unit = "delphoai_news_sources_runner.service";
+    };
+  };
+
+  # example python script
+  systemd.services."delphoai_news_sources_runner" = 
+  let
+    script = /home/shafy/projects/DelphosAI-News-Sources/main.py;
+  in {
+    path = with pkgs; [
+      git
+      (python311.withPackages (ps: with ps; [
+        numpy 
+        pandas 
+        scipy 
+        scikit-learn 
+        matplotlib
+        ipython
+        requests
+        aiohttp
+        gql
+        pathlib2
+        psycopg2
+        sqlalchemy
+        selenium
+        webdriver-manager
+      ]))
+    ];
+    script = "python3 ${script}";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
