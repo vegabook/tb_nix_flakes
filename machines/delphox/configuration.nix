@@ -121,8 +121,8 @@
   systemd.timers."delphoai_news_sources_runner" = {
   wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnBootSec = "5m";
-      OnUnitActiveSec = "1h";
+      OnBootSec = "1m";
+      OnUnitActiveSec = "1m";
       Unit = "delphoai_news_sources_runner.service";
     };
   };
@@ -132,7 +132,7 @@
   # example python script
   systemd.services."delphoai_news_sources_runner" = 
   let
-    script = /home/shafy/projects/DelphosAI-News-Sources/main.py;
+    script = /home/shafy/scratch/file_creator_test.py;
   in {
     path = with pkgs; [
       git
