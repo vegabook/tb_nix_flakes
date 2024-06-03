@@ -118,21 +118,21 @@
     vim="nvim";
   };
 
-  systemd.timers."delphoai_news_sources_runner" = {
+  systemd.timers."neonews_runner" = {
   wantedBy = [ "timers.target" ];
     timerConfig = {
-      OnBootSec = "1m";
-      OnUnitActiveSec = "1m";
-      Unit = "delphoai_news_sources_runner.service";
+      OnBootSec = "5m";
+      OnUnitActiveSec = "6h";
+      Unit = "neonews_runner.service";
     };
   };
 
 
 
   # example python script
-  systemd.services."delphoai_news_sources_runner" = 
+  systemd.services."neonews_runner" = 
   let
-    script = /home/shafy/scratch/file_creator_test.py;
+    script = /home/shafy/projects/neonews/main.py;
   in {
     path = with pkgs; [
       git
