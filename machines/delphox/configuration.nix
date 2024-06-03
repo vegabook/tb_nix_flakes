@@ -122,7 +122,7 @@
   wantedBy = [ "timers.target" ];
     timerConfig = {
       OnBootSec = "5m";
-      OnUnitActiveSec = "3h";
+      OnUnitActiveSec = "1h";
       Unit = "delphoai_news_sources_runner.service";
     };
   };
