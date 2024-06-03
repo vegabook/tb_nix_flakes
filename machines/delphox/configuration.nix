@@ -176,16 +176,17 @@
 
   # Postgres
   # ...
- 
   # ...
-  config.services.postgresql = {
+  services.postgresql = {
     enable = true;
-    ensureDatabases = [ "mydatabase" ];
+    ensureDatabases = [ "neonews" ];
+    enableTCPIP = true;
     authentication = pkgs.lib.mkOverride 10 ''
       #type database  DBuser  auth-method
       local all       all     trust
     '';
   };
+  # ...
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
