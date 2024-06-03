@@ -107,7 +107,8 @@
     git
     tmux
     mkpasswd
-    fail2ban
+    htop
+    tree
   ];
 
   programs.bash.shellAliases = {
@@ -171,18 +172,18 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.fail2ban.enable = true;
 
   # Postgres
   # ...
-  services.postgresql = {
+ 
+  # ...
+  config.services.postgresql = {
     enable = true;
-    ensureDatabases = [ "postgres" "tbrowne" ];
-    enableTCPIP = true;
+    ensureDatabases = [ "mydatabase" ];
     authentication = pkgs.lib.mkOverride 10 ''
       #type database  DBuser  auth-method
-      host  all      all     127.0.0.1/32   trust
-      # ipv6
-      host all       all     ::1/128        trust
+      local all       all     trust
     '';
   };
 
