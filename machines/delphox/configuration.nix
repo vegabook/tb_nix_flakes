@@ -107,7 +107,6 @@
     git
     tmux
     mkpasswd
-    postgresql
     fail2ban
   ];
 
@@ -127,6 +126,8 @@
       Unit = "delphoai_news_sources_runner.service";
     };
   };
+
+
 
   # example python script
   systemd.services."delphoai_news_sources_runner" = 
@@ -170,6 +171,17 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  # Postgres
+  # ...
+  config.services.postgresql = {
+    enable = true;
+    ensureDatabases = [ "postgres" "tbrowne" ];
+    authentication = pkgs.lib.mkOverride 10 ''
+      #type database  DBuser  auth-method
+      local all       all     trust
+    '';
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
