@@ -186,7 +186,18 @@
       local all       all     trust
     '';
   };
-  # ...
+  #services.postgresql = {
+  #  enable = true;
+  #  ensureDatabases = [ "neonews" ];
+  #  enableTCPIP = true;
+  #  authentication = pkgs.lib.mkOverride 10 ''
+  #    #type database DBuser origin-address auth-method
+  #    # ipv4
+  #    host  all      all     127.0.0.1/32   trust
+  #    # ipv6
+  #    host all       all     ::1/128        trust
+  #  '';
+  #};
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
