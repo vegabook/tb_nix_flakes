@@ -174,7 +174,7 @@
 
   # Postgres
   # ...
-  config.services.postgresql = {
+  services.postgresql = {
     enable = true;
     ensureDatabases = [ "postgres" "tbrowne" ];
     authentication = pkgs.lib.mkOverride 10 ''
