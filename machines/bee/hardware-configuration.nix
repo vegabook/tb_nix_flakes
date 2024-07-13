@@ -31,7 +31,16 @@
       options = [ "compress=zlib:5" ];
     };
 
-  swapDevices = [ ];
+  fileSystems."/mnt/swap" =
+    { device = "/dev/disk/by-uuid/de7ca820-3326-4201-ac15-6e5ca09fd7db";
+      fsType = "ext4";
+    };
+
+  swapDevices = [ {
+    device = "/mnt/swap/swapfile";
+    size = 32*1024;
+    } 
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
