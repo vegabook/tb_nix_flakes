@@ -107,7 +107,7 @@
     ports = [
       41111
     ];
-    settings.PasswordAuthentication = true;
+    settings.PasswordAuthentication = false;
   };
 
   services.fail2ban = {
