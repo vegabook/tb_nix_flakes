@@ -88,6 +88,13 @@ in
     home-manager
     htop
     git
+    gcc
+    gnumake
+    gcc
+    libiconv
+    autoconf
+    automake
+    libtool
   ];
 
   programs.bash.promptInit =  ''
