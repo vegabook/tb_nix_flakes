@@ -140,9 +140,10 @@ in
      group = "wheel";
      settings = {
        Peers = [
-         tls://fr2.servers.devices.cwinfo.net:23108
-         tls://s2.i2pd.xyz:39575
+         "tls://fr2.servers.devices.cwinfo.net:23108"
+         "tls://s2.i2pd.xyz:39575"
        ];
+       Listen = [ "tls://[::]:18472" ];
      };
    };
 
@@ -254,7 +255,7 @@ in
 
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 18472 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
