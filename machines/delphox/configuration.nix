@@ -96,6 +96,19 @@
     packages = with pkgs; [];
   };
 
+  services.yggdrasil = {
+    enable = true;
+    persistentKeys = true;
+    group = "wheel";
+    settings = {
+      Peers = [
+        "tls://fr2.servers.devices.cwinfo.net:23108"
+        "tls://s2.i2pd.xyz:39575"
+      ];
+      Listen = [ "tls://[::]:18472" ];
+    };
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -119,47 +132,7 @@
     vim="nvim";
   };
 
-  systemd.timers."neonews_runner" = {
-  wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5m";
-      OnUnitActiveSec = "6h";
-      Unit = "neonews_runner.service";
-    };
-  };
 
-
-
-  # example python script
-  systemd.services."neonews_runner" = 
-  let
-    script = /home/shafy/projects/neonews/main.py;
-  in {
-    path = with pkgs; [
-      git
-      (python311.withPackages (ps: with ps; [
-        numpy 
-        pandas 
-        scipy 
-        scikit-learn 
-        matplotlib
-        ipython
-        requests
-        aiohttp
-        gql
-        pathlib2
-        psycopg2
-        sqlalchemy
-        selenium
-        webdriver-manager
-      ]))
-    ];
-    script = "python3 ${script}";
-    serviceConfig = {
-      Type = "oneshot";
-      User = "root";
-    };
-  };
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -171,7 +144,11 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false; 
+  };
+
   services.fail2ban.enable = true;
 
   # Postgres
