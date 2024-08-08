@@ -125,7 +125,7 @@ in
   # Enable the OpenSSH daemon.
    services.openssh = {
      enable = true;
-     settings.PasswordAuthentication = true;
+     settings.PasswordAuthentication = false;
    };
 
    services.fail2ban = {
@@ -141,7 +141,7 @@ in
      settings = {
        Peers = [
          tls://fr2.servers.devices.cwinfo.net:23108
-	 tls://s2.i2pd.xyz:39575
+         tls://s2.i2pd.xyz:39575
        ];
      };
    };
