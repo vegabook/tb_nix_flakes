@@ -122,8 +122,7 @@
     group = "wheel";
     settings = {
       Peers = [
-        tls://vpn.itrus.su:7992
-        quic://23.137.251.45:5222 
+        tls://sabertruth.org:18472
       ];
     };
   };
