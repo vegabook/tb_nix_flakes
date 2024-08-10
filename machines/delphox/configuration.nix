@@ -163,21 +163,76 @@
       local all       all     trust
     '';
   };
-  #services.postgresql = {
-  #  enable = true;
-  #  ensureDatabases = [ "neonews" ];
-  #  enableTCPIP = true;
-  #  authentication = pkgs.lib.mkOverride 10 ''
-  #    #type database DBuser origin-address auth-method
-  #    # ipv4
-  #    host  all      all     127.0.0.1/32   trust
-  #    # ipv6
-  #    host all       all     ::1/128        trust
-  #  '';
-  #};
+
+
+  services.caddy = {
+    enable = true;
+
+    virtualHosts."www.scendance.fr" = {
+    	extraConfig = ''
+    	  reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4001
+    	'';
+    };
+    virtualHosts."scendance.fr".extraConfig = ''
+      redir https://www.scendance.fr{uri}
+    '';
+    virtualHosts."scen.dance".extraConfig = ''
+      redir https://www.scendance.fr{uri}
+    '';
+    virtualHosts."scendance.digital".extraConfig = ''
+      redir https://www.scendance.fr{uri}
+    '';
+    virtualHosts."scendance.com".extraConfig = ''
+      redir https://www.scendance.fr{uri}
+    '';
+
+    virtualHosts."suprabonds.com".extraConfig = ''
+	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4002
+    ''; 
+    
+    virtualHosts."signaliser.com".extraConfig = ''
+	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4003
+    ''; 
+
+    virtualHosts."sabretruth.com".extraConfig = ''
+	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4004
+    ''; 
+    virtualHosts."sabertruth.com".extraConfig = ''
+      redir https://sabretruth.com{uri}
+    '';
+    virtualHosts."sabretruth.org".extraConfig = ''
+      redir https://sabretruth.com{uri}
+    '';
+    virtualHosts."sabertruth.org".extraConfig = ''
+      redir https://sabretruth.com{uri}
+    '';
+  };
+
+  services.haproxy = {
+    enable = true;
+    config = ''
+      global
+	daemon
+	maxconn 10000
+
+      defaults
+	timeout connect 500s
+	timeout client 5000s
+	timeout server 1h
+
+      frontend sshd
+	bind *:41111
+	default_backend ssh
+	timeout client 1h
+
+      backend ssh
+	mode tcp
+	server ipv6 [204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:41111
+    '';
+  };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 18472 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 18472 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;

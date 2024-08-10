@@ -140,78 +140,12 @@ in
      group = "wheel";
      settings = {
        Peers = [
-         "tls://fr2.servers.devices.cwinfo.net:23108"
+         "tls://sabretruth.org:18472"
          "tls://s2.i2pd.xyz:39575"
        ];
-       Listen = [ "tls://[::]:18472" ];
      };
    };
 
-  services.caddy = {
-    enable = true;
-
-    virtualHosts."www.scendance.fr" = {
-    	extraConfig = ''
-    	  reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4001
-    	'';
-    };
-    virtualHosts."scendance.fr".extraConfig = ''
-      redir https://www.scendance.fr{uri}
-    '';
-    virtualHosts."scen.dance".extraConfig = ''
-      redir https://www.scendance.fr{uri}
-    '';
-    virtualHosts."scendance.digital".extraConfig = ''
-      redir https://www.scendance.fr{uri}
-    '';
-    virtualHosts."scendance.com".extraConfig = ''
-      redir https://www.scendance.fr{uri}
-    '';
-
-    virtualHosts."suprabonds.com".extraConfig = ''
-	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4002
-    ''; 
-    
-    virtualHosts."signaliser.com".extraConfig = ''
-	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4003
-    ''; 
-
-    virtualHosts."sabretruth.com".extraConfig = ''
-	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4004
-    ''; 
-    virtualHosts."sabertruth.com".extraConfig = ''
-      redir https://sabretruth.com{uri}
-    '';
-    virtualHosts."sabretruth.org".extraConfig = ''
-      redir https://sabretruth.com{uri}
-    '';
-    virtualHosts."sabertruth.org".extraConfig = ''
-      redir https://sabretruth.com{uri}
-    '';
-  };
-
-  services.haproxy = {
-    enable = true;
-    config = ''
-      global
-	daemon
-	maxconn 10000
-
-      defaults
-	timeout connect 500s
-	timeout client 5000s
-	timeout server 1h
-
-      frontend sshd
-	bind *:41111
-	default_backend ssh
-	timeout client 1h
-
-      backend ssh
-	mode tcp
-	server ipv6 [204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:41111
-    '';
-  };
 
   #systemd.timers."example_python_script" = {
   #wantedBy = [ "timers.target" ];
