@@ -194,17 +194,17 @@
 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4003
     ''; 
 
-    virtualHosts."sabretruth.com".extraConfig = ''
+    virtualHosts."sabretruth.org".extraConfig = ''
 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4004
     ''; 
     virtualHosts."sabertruth.com".extraConfig = ''
-      redir https://sabretruth.com{uri}
+      redir https://sabretruth.org{uri}
     '';
     virtualHosts."sabretruth.org".extraConfig = ''
-      redir https://sabretruth.com{uri}
+      redir https://sabretruth.org{uri}
     '';
     virtualHosts."sabertruth.org".extraConfig = ''
-      redir https://sabretruth.com{uri}
+      redir https://sabretruth.org{uri}
     '';
   };
 
