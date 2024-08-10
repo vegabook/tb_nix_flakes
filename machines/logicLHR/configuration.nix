@@ -189,7 +189,7 @@ in
 
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 18472 ];
+  networking.firewall.allowedTCPPorts = [];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
