@@ -200,7 +200,7 @@
     virtualHosts."sabertruth.com".extraConfig = ''
       redir https://sabretruth.org{uri}
     '';
-    virtualHosts."sabretruth.org".extraConfig = ''
+    virtualHosts."sabretruth.com".extraConfig = ''
       redir https://sabretruth.org{uri}
     '';
     virtualHosts."sabertruth.org".extraConfig = ''
