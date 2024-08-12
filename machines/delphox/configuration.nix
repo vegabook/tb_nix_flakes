@@ -122,6 +122,7 @@
     mkpasswd
     htop
     tree
+    zoxide
   ];
 
   programs.bash.shellAliases = {
@@ -133,7 +134,6 @@
   };
 
   programs.zoxide = {
-    enable = true;
     enableBashIntegration = true;
   };
 
