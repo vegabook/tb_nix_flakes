@@ -92,6 +92,7 @@ in
     autoconf
     automake
     libtool
+    zoxide
   ];
 
   programs.bash.promptInit =  ''
