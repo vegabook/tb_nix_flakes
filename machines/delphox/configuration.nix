@@ -122,7 +122,6 @@
     mkpasswd
     htop
     tree
-    zoxide
   ];
 
   programs.bash.shellAliases = {
@@ -132,11 +131,6 @@
     ls="ls --color=tty";
     vim="nvim";
   };
-
-  programs.zoxide = {
-    enableBashIntegration = true;
-  };
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
