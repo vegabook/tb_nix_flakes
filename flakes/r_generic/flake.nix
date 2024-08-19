@@ -55,6 +55,8 @@
             rPackages.devtools
             rPackages.tidyverse
             rPackages.svglite
+            rPackages.openai
+            rPackages.readxl
           ];
         };
       });
