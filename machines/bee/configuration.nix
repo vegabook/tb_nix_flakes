@@ -82,6 +82,8 @@
      autoconf
      automake
      libtool
+     btrbk
+     xclip
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
