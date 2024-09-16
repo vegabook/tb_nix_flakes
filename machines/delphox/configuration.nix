@@ -102,8 +102,8 @@
     group = "wheel";
     settings = {
       Peers = [
-        "tls://fr2.servers.devices.cwinfo.net:23108"
         "tls://s2.i2pd.xyz:39575"
+	"tls://139.28.220.141:3333"
       ];
       Listen = [ "tls://[::]:18472" ];
     };
