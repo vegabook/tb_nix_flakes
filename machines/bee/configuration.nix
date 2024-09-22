@@ -112,7 +112,7 @@
   };
 
   services.fail2ban = {
-     enable = true;
+     enable = false;
      maxretry = 5; # Observe 5 violations before banning an IP
      bantime = "12h"; # Set bantime to one day
   };
