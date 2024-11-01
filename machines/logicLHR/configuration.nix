@@ -134,16 +134,78 @@ in
 
    services.yggdrasil = {
      enable = true;
-     persistentKeys = true;
+     configFile = "/home/tbrowne/.config/yggdrasil/yggdrasil_logicLHR.conf";
      group = "wheel";
-     settings = {
-       Peers = [
-         "tls://sabretruth.org:18472"
-         "tls://s2.i2pd.xyz:39575"
-       ];
-     };
    };
 
+   services.caddy = {
+     enable = true;
+ 
+     virtualHosts."www.scendance.fr" = {
+     	extraConfig = ''
+     	  reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4001
+     	'';
+     };
+     virtualHosts."scendance.fr".extraConfig = ''
+       redir https://www.scendance.fr{uri}
+     '';
+     virtualHosts."scen.dance".extraConfig = ''
+       redir https://www.scendance.fr{uri}
+     '';
+     virtualHosts."scendance.digital".extraConfig = ''
+       redir https://www.scendance.fr{uri}
+     '';
+     virtualHosts."scendance.com".extraConfig = ''
+       redir https://www.scendance.fr{uri}
+     '';
+ 
+     virtualHosts."suprabonds.com".extraConfig = ''
+ 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4002
+     '';
+ 
+     virtualHosts."signaliser.com".extraConfig = ''
+ 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4003
+     '';
+ 
+     virtualHosts."sabretruth.org".extraConfig = ''
+ 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4004
+     '';
+     virtualHosts."sabertruth.com".extraConfig = ''
+       redir https://sabretruth.org{uri}
+     '';
+     virtualHosts."sabretruth.com".extraConfig = ''
+       redir https://sabretruth.org{uri}
+     '';
+     virtualHosts."sabertruth.org".extraConfig = ''
+       redir https://sabretruth.org{uri}
+     '';
+  };
+
+  services.haproxy = {
+    enable = true;
+    config = ''
+      global
+	daemon
+	maxconn 10000
+
+      defaults
+	timeout connect 500s
+	timeout client 5000s
+	timeout server 1h
+
+      frontend sshd
+	bind *:41111
+	default_backend ssh
+	timeout client 1h
+
+      backend ssh
+	mode tcp
+	server ipv6 [204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:41111
+    '';
+  };
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 18472 ];
 
   #systemd.timers."example_python_script" = {
   #wantedBy = [ "timers.target" ];
@@ -186,8 +248,6 @@ in
   #};
 
 
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
