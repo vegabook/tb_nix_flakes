@@ -123,7 +123,7 @@
     group = "wheel";
     settings = {
       Peers = [
-        tls://sabertruth.org:18472
+        tls://london.sabretruth.org:18472
       ];
     };
   };
