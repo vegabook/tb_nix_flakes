@@ -66,6 +66,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
      neovim 
+     helix
      wget
      htop
      tmux
