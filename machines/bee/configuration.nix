@@ -108,37 +108,18 @@
   openFirewall = true;
   settings = {
     global = {
-      "workgroup" = "WORKGROUP";
-      "server string" = "smbnix";
-      "netbios name" = "smbnix";
-      "security" = "user";
-      #"use sendfile" = "yes";
-      #"max protocol" = "smb2";
-      # note: localhost is the ipv6 localhost ::1
-      "hosts allow" = "192.168.0. 127.0.0.1 localhost";
-      "hosts deny" = "0.0.0.0/0";
-      "guest account" = "nobody";
-      "map to guest" = "bad user";
+      "invalid users" = [
+        "root"
+      ];
+      "passwd program" = "/run/wrappers/bin/passwd %u";
+      security = "user";
     };
-    "public" = {
-      "path" = "/mnt/sea5/";
-      "browseable" = "yes";
-      "read only" = "no";
+    public = {
+      browseable = "yes";
+      comment = "Public samba share.";
       "guest ok" = "yes";
-      "create mask" = "0644";
-      "directory mask" = "0755";
-      "force user" = "username";
-      "force group" = "groupname";
-    };
-    "private" = {
-      "path" = "/mnt/sea5/";
-      "browseable" = "yes";
-      "read only" = "no";
-      "guest ok" = "no";
-      "create mask" = "0644";
-      "directory mask" = "0755";
-      "force user" = "username";
-      "force group" = "groupname";
+      path = "/mnt/sea5";
+      "read only" = "yes";
     };
   };
 };
