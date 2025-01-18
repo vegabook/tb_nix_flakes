@@ -110,12 +110,8 @@
 
   services.nfs.server.enable = true;
   services.nfs.server.exports = ''
-    /export         192.168.1.6(rw,fsid=0,no_subtree_check) 192.168.1.15(rw,fsid=0,no_subtree_check)
+    /export         192.168.1.*(insecure,rw,fsid=0,no_subtree_check) 
   '';
-
-
-
-
 
 
   # Enable the OpenSSH daemon.
