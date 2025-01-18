@@ -103,34 +103,19 @@
 
   # List services that you want to enable:
 
-  services.samba = {
-  enable = true;
-  openFirewall = true;
-  settings = {
-    global = {
-      "invalid users" = [
-        "root"
-      ];
-      "passwd program" = "/run/wrappers/bin/passwd %u";
-      security = "user";
-    };
-    public = {
-      browseable = "yes";
-      comment = "Public samba share.";
-      "guest ok" = "yes";
-      path = "/mnt/sea5";
-      "read only" = "yes";
-    };
+  fileSystems."/export/sea5" = {
+    device = "/mnt/sea5";
+    options = [ "bind" ];
   };
-};
-# for samba advertise shares to windows
-services.samba-wsdd = {
-  enable = true;
-  openFirewall = true;
-};
-# for samba
-networking.firewall.enable = true;
-networking.firewall.allowPing = true;
+
+  services.nfs.server.enable = true;
+  services.nfs.server.exports = ''
+    /export         192.168.1.6(rw,fsid=0,no_subtree_check) 192.168.1.15(rw,fsid=0,no_subtree_check)
+  '';
+
+
+
+
 
 
   # Enable the OpenSSH daemon.
@@ -169,6 +154,7 @@ networking.firewall.allowPing = true;
     4001
     4002
     4003
+    2049
   ];
   networking.firewall.allowedUDPPorts = [ 
     4000
