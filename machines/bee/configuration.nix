@@ -108,9 +108,17 @@
     options = [ "bind" ];
   };
 
-  services.nfs.server.enable = true;
+  services.nfs.server = {
+    enable = true;
+    #lockdPort=30011;
+    #mountdPort = 30012;
+    #statdPort = 30010;
+    #extraNfsdConfig = "";
+  }
+
+
   services.nfs.server.exports = ''
-    /export         192.168.1.*(insecure,rw,fsid=0,no_subtree_check) 
+    /export         192.168.1.0/24(insecure,rw,fsid=0,no_subtree_check) 
   '';
 
 
