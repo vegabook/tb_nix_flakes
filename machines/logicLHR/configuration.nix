@@ -141,14 +141,6 @@ in
    services.caddy = {
      enable = true;
  
-     virtualHosts."suprabonds.com".extraConfig = ''
- 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4002
-     '';
- 
-     virtualHosts."signaliser.com".extraConfig = ''
- 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4003
-     '';
- 
      virtualHosts."sabretruth.org".extraConfig = ''
  	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4004
      '';
