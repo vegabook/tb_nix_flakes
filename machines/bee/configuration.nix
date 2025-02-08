@@ -128,7 +128,7 @@
   };
 
   services.fail2ban = {
-     enable = false;
+     enable = true;
      maxretry = 5; # Observe 5 violations before banning an IP
      bantime = "12h"; # Set bantime to one day
   };
@@ -150,10 +150,7 @@
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 
-    4000
-    4001
-    4002
-    4003
+    4004
     111
     20048
     2049
