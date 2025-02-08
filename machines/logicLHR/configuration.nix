@@ -141,24 +141,6 @@ in
    services.caddy = {
      enable = true;
  
-     virtualHosts."www.scendance.fr" = {
-     	extraConfig = ''
-     	  reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4001
-     	'';
-     };
-     virtualHosts."scendance.fr".extraConfig = ''
-       redir https://www.scendance.fr{uri}
-     '';
-     virtualHosts."scen.dance".extraConfig = ''
-       redir https://www.scendance.fr{uri}
-     '';
-     virtualHosts."scendance.digital".extraConfig = ''
-       redir https://www.scendance.fr{uri}
-     '';
-     virtualHosts."scendance.com".extraConfig = ''
-       redir https://www.scendance.fr{uri}
-     '';
- 
      virtualHosts."suprabonds.com".extraConfig = ''
  	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4002
      '';
