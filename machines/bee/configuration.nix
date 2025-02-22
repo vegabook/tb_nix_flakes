@@ -94,6 +94,17 @@
   #   enableSSHSupport = true;
   # };
 
+  fileSystems."/export/t5" = {
+    device = "/mnt/t5";
+    options = [ "bind" ];
+  };
+
+
+  fileSystems."/export/sea5" = {
+    device = "/mnt/sea5";
+    options = [ "bind" ];
+  };
+
   programs.bash.shellAliases = {
     l = "ls -alh";
     ll = "ls -l";
@@ -104,8 +115,8 @@
   # List services that you want to enable:
 
   services.nfs.server.exports = ''
-    /mnt/sea5         192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
-    /mnt/t5           192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
+    /export/sea5         192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
+    /export/t5           192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
   '';
 
   services.nfs.server = {
