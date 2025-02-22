@@ -104,8 +104,8 @@
   # List services that you want to enable:
 
   services.nfs.server.exports = ''
-    /mnt/sea5         192.168.1.0/24(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
-    /mnt/t5           192.168.1.0/24(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
+    /mnt/sea5         192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
+    /mnt/t5           192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
   '';
 
   services.nfs.server = {
