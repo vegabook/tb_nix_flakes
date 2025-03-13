@@ -20,6 +20,7 @@ let tmuxbg = if hostname == "rpi4" then "colour204"
              else if hostname == "scen7" then "colour59"
              else if hostname == "logicLHR" then "colour9"
              else if hostname == "bee" then "colour40"
+             else if hostname == "m96" then "colour152"
              else "colour255";
 in
 #let
