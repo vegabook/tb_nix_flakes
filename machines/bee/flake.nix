@@ -19,7 +19,7 @@
     nixosConfigurations = {
       beeNixos = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit system; };
-	modules = [ ./configuration.nix ];
+	      modules = [ ./configuration.nix ];
       };
     };
   };
