@@ -13,9 +13,8 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = "bee"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -44,12 +43,10 @@
   };
 
   # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
   };
-
-
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tbrowne = {
@@ -65,25 +62,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim 
-     helix
-     wget
-     htop
-     tmux
-     git
-     home-manager
-     bison
-     flex
-     fontforge
-     makeWrapper
-     pkg-config
-     gnumake
-     gcc
-     libiconv
-     autoconf
-     automake
-     libtool
-     btrbk
+  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  #  wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -94,88 +74,16 @@
   #   enableSSHSupport = true;
   # };
 
-
-  fileSystems."/export/sea5" = {
-    device = "/mnt/sea5";
-    options = [ "bind" ];
-  };
-
-  programs.bash.shellAliases = {
-    l = "ls -alh";
-    ll = "ls -l";
-    ls = "ls --color=tty";
-    vim = "nvim";
-  };
-
   # List services that you want to enable:
 
-  services.nfs.server.exports = ''
-    /export/sea5         192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
-  '';
-
-  services.nfs.server = {
-    enable = true;
-    lockdPort=30011;
-    mountdPort = 30012;
-    statdPort = 30010;
-    extraNfsdConfig = "";
-  };
-
   # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    ports = [
-      41111
-    ];
-    settings.PasswordAuthentication = false;
-  };
-
-  services.fail2ban = {
-     enable = true;
-     maxretry = 5; # Observe 5 violations before banning an IP
-     bantime = "12h"; # Set bantime to one day
-  };
-
-  services.yggdrasil = {
-    enable = true;
-    persistentKeys = true;
-    group = "wheel";
-    settings = {
-      Peers = [
-        tls://london.sabretruth.org:18472
-      ];
-    };
-  };
-
-  services.postgresql = {
-    enable = true;
-  };
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 
-    4004
-    111
-    20048
-    2049
-    30010
-    30011
-    30012
-  ];
-  networking.firewall.allowedUDPPorts = [ 
-    4000
-    4001
-    4002
-    4003
-    111
-    20048
-    2049
-    30010
-    30011
-    30012
-  ];
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -183,8 +91,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
-
-
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 }

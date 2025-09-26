@@ -8,49 +8,37 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "uas" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "uas" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5f6ac8ae-3720-43a0-a333-e27842c58cc6";
-      fsType = "btrfs";
-      options = [ "subvol=@" ];
+    { device = "/dev/disk/by-uuid/1a6fefda-c490-48fa-a751-e5b5a44d4938";
+      fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/BDB2-1C07";
+    { device = "/dev/disk/by-uuid/398B-2501";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-    };
-
-  fileSystems."/mnt/swap" =
-    { device = "/dev/disk/by-uuid/de7ca820-3326-4201-ac15-6e5ca09fd7db";
-      fsType = "ext4";
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/mnt/sea5" =
     { device = "/dev/disk/by-uuid/c28edfd2-13ba-43e7-a294-19777348d069";
       fsType = "btrfs";
     };
-
-  fileSystems."/mnt/t5" =
-    { device = "/dev/disk/by-uuid/e072326f-2e22-4470-b505-95bcb7185c52";
-      fsType = "btrfs";
-      options = [ "subvol=data" ];
-    };
-
-  swapDevices = [ ];
+  
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/9c15e745-ed62-45ce-bb64-418abbb490f2"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp0s20f0u4.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.tun0.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
