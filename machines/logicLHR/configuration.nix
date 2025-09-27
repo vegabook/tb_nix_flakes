@@ -142,7 +142,7 @@ in
      enable = true;
  
      virtualHosts."sabretruth.org".extraConfig = ''
- 	reverse_proxy http://[204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:4004
+ 	reverse_proxy http://[202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:4004
      '';
      virtualHosts."sabertruth.com".extraConfig = ''
        redir https://sabretruth.org{uri}
@@ -174,7 +174,7 @@ in
 
       backend ssh
 	mode tcp
-	server ipv6 [204:915b:4fa1:1d9a:a061:4b9e:76be:f1fc]:41111
+	server ipv6 [202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:41111
     '';
   };
 
