@@ -14,8 +14,7 @@
       with pkgs; {
         devShells.default = mkShell {
           buildInputs = [
-            erlang_25
-            beam.packages.erlang_25.elixir_1_14
+	    beamMinimal28Packages.elixir_1_19
             nodejs
           ]
           ++ lib.optionals stdenv.isLinux [
