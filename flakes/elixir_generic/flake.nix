@@ -16,6 +16,8 @@
           buildInputs = [
 	    beamMinimal28Packages.elixir_1_19
             nodejs
+	    tailwindcss_4
+	    watchman
           ]
           ++ lib.optionals stdenv.isLinux [
             # For ExUnit Notifier on Linux.
