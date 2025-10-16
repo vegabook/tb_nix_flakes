@@ -64,11 +64,11 @@ in
     fuse
     neovim
     nodejs
-    iosevka
     asciinema
     bqn386
     nerd-fonts.jetbrains-mono
     nerd-fonts.iosevka
+    git-lfs
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -81,10 +81,6 @@ in
     enable = true;
     userName = "vegabook";
     userEmail = "thomas@scendance.fr";
-  };
-
-  programs.git-lfs = {
-    enable = true;
   };
 
   programs.tmux = {
