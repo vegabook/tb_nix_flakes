@@ -28,19 +28,21 @@
         default = pkgs.mkShell {
           # The Nix packages provided in the environment
           packages = with pkgs; [
-            python311
-            python311Packages.pandas
-            python311Packages.numpy
-            python311Packages.scipy
-            python311Packages.scikit-learn
-            python311Packages.matplotlib
-            python311Packages.ipython
-            python311Packages.requests
-            python311Packages.aiohttp
-            python311Packages.gql
-            python311Packages.pathlib2
-            python311Packages.pip
-            python311Packages.pyarrow
+            python313
+            python313Packages.pandas
+            python313Packages.numpy
+            python313Packages.scipy
+            python313Packages.scikit-learn
+            python313Packages.matplotlib
+            python313Packages.ipython
+            python313Packages.requests
+            python313Packages.aiohttp
+            python313Packages.gql
+            python313Packages.pathlib2
+            python313Packages.pip
+            python313Packages.pyarrow
+            python313Packages.polars
+
           ];
         };
       });
