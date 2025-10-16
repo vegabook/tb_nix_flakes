@@ -77,10 +77,12 @@ in
     #   echo "Hello, ${config.home.username}!"
     # '')
   ];           
+
   programs.git = {
     enable = true;
     userName = "vegabook";
     userEmail = "thomas@scendance.fr";
+    lfs.enable = true;
   };
 
   programs.tmux = {
