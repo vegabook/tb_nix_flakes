@@ -142,7 +142,7 @@ in
      enable = true;
 
      virtualHosts."aspectdelta.com".extraConfig = ''
- 	reverse_proxy 127.0.0.1:4000; 
+ 	reverse_proxy http://127.0.0.1:4000
      '';
  
      virtualHosts."sabretruth.org".extraConfig = ''
