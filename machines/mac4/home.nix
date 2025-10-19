@@ -210,6 +210,7 @@ in
   # if you don't want to manage your shell through Home Manager.
   home.sessionVariables = {
     # EDITOR = "emacs";
+    PATH = "$HOME/.nix-profile/bin:/opt/homebrew/opt/postgresql@17/bin:$HOME/scripts:$PATH";
     NIXPKGS_ALLOW_UNFREE=1;
   };
 
@@ -217,3 +218,5 @@ in
     vim = "nvim"; 
   };
 }
+
+
