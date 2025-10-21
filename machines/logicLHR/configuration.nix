@@ -144,6 +144,10 @@ in
      virtualHosts."aspectdelta.com".extraConfig = ''
  	reverse_proxy http://[202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:4000
      '';
+
+     virtualHosts."signaliser.com".extraConfig = ''
+ 	reverse_proxy http://[202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:50051
+     '';
  
      virtualHosts."sabretruth.org".extraConfig = ''
  	reverse_proxy http://[202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:4004
