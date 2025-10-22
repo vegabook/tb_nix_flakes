@@ -176,27 +176,10 @@ in
 	default_backend ssh
 	timeout client 1h
 
-      frontend gBLPd
-	bind *:50051
-	default_backend gBLP
-	timeout client 1h
-
-      frontend gBLPkeyd
-      	bind *:50052
-	default_backend gBLPkey
-	timeout client 1h
-
       backend ssh
 	mode tcp
 	server ipv6 [202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:41111
 
-      backend gBLP
-	mode tcp
-	server ipv6 [202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:50051
-
-      backend gBLPkey
-	mode tcp
-	server ipv6 [202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:50052
     '';
   };
 
