@@ -153,10 +153,11 @@
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 
-    4004
     111
-    20048
+    4004
     2049
+    6667
+    20048
     30010
     30011
     30012
@@ -164,13 +165,11 @@
     50052
   ];
   networking.firewall.allowedUDPPorts = [ 
-    4000
-    4001
-    4002
-    4003
     111
-    20048
+    4004
     2049
+    6667
+    20048
     30010
     30011
     30012
