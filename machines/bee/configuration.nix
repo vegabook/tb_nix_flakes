@@ -101,6 +101,15 @@
     options = [ "bind" ];
   };
 
+  programs.git = {
+    enable = true;
+    config = {
+      advice = {
+        addIgnoredFile = false;
+      };
+    };
+  };
+
   programs.bash.shellAliases = {
     l = "ls -alh";
     ll = "ls -l";
