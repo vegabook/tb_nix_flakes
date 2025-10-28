@@ -93,6 +93,8 @@ in
     automake
     libtool
     zoxide
+    weechat
+    nostr-rs-relay
   ];
 
   programs.bash.promptInit =  ''
@@ -142,11 +144,11 @@ in
      enable = true;
 
      virtualHosts."aspectdelta.com".extraConfig = ''
- 	reverse_proxy http://[202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:4000
+ 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
      '';
  
      virtualHosts."sabretruth.org".extraConfig = ''
- 	reverse_proxy http://[202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:4004
+ 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
      '';
      virtualHosts."sabertruth.com".extraConfig = ''
        redir https://sabretruth.org{uri}
@@ -178,7 +180,7 @@ in
 
       backend ssh
 	mode tcp
-	server ipv6 [202:f976:2a30:6331:3d0d:95df:6c6b:20a0]:41111
+	server ipv6 [200:5483:a5f4:c957:d29d:ec17:381d:eebc]:41111
 
     '';
   };
