@@ -104,14 +104,16 @@
 
   programs.git = {
     enable = true;
-    userName = "vegabook";  
-    userEmail = "thomas.browne@mac.com";  
     config = {
       advice = {
         addIgnoredFile = false;
       };
       init = {
         defaultBranch = "main"; # Replace "main" with your preferred branch name
+      };
+      user = {
+        name = "vegabook";  # Replace with your preferred name
+        email = "thomas.browne@mac.com";
       };
     };
   };
