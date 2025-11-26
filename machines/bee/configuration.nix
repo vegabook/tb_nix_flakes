@@ -50,6 +50,11 @@
     xkb.variant = "";
   };
 
+  swapDevices = [{
+    device = "/swap/swapfile";
+    size = 96 * 1024; # 16GB
+  }];
+
 
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
