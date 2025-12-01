@@ -140,25 +140,47 @@ in
      group = "wheel";
    };
 
-   services.caddy = {
-     enable = true;
+   #services.caddy = {
+   #  enable = true;
+#
+#     virtualHosts."aspectdelta.com".extraConfig = ''
+# 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
+#     '';
+# 
+#     virtualHosts."sabretruth.org".extraConfig = ''
+# 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
+#     '';
+#     virtualHosts."sabertruth.com".extraConfig = ''
+#       redir https://sabretruth.org{uri}
+#     '';
+#     virtualHosts."sabretruth.com".extraConfig = ''
+#       redir https://sabretruth.org{uri}
+#     '';
+#     virtualHosts."sabertruth.org".extraConfig = ''
+#       redir https://sabretruth.org{uri}
+#     '';
+#  };
 
-     virtualHosts."aspectdelta.com".extraConfig = ''
- 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
-     '';
- 
-     virtualHosts."sabretruth.org".extraConfig = ''
- 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
-     '';
-     virtualHosts."sabertruth.com".extraConfig = ''
-       redir https://sabretruth.org{uri}
-     '';
-     virtualHosts."sabretruth.com".extraConfig = ''
-       redir https://sabretruth.org{uri}
-     '';
-     virtualHosts."sabertruth.org".extraConfig = ''
-       redir https://sabretruth.org{uri}
-     '';
+  services.caddy = {
+    enable = true;
+
+    virtualHosts = {
+      # Main site
+      "sabretruth.org" = {
+	hostName = "sabretruth.org";
+	extraConfig = ''
+	  reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
+	'';
+      };
+
+      # The other site
+      "aspectdelta.com" = {
+	hostName = "aspectdelta.com";
+	extraConfig = ''
+	  reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
+	'';
+      };
+    };
   };
 
   services.haproxy = {
