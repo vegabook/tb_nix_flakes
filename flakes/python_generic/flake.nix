@@ -3,7 +3,7 @@
 
   # Flake inputs
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs"; # also valid: "nixpkgs"
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
   };
 
   # Flake outputs
@@ -29,42 +29,24 @@
           # The Nix packages provided in the environment
           packages = with pkgs; [
             python312
-            python312Packages.grpcio
-            python312Packages.grpcio-tools
-            python312Packages.ipython
-            python312Packages.certifi
-            python312Packages.cryptography
-            python312Packages.rich
-            python312Packages.numpy
-            python312Packages.pandas
-            python312Packages.polars
-            python312Packages.psutil
-            python312Packages.pytest
-            python312Packages.poetry-core
-            python312Packages.loguru
-            python312Packages.requests
-            python312Packages.vulture
-            ruff
-            poetry
-            grpc-tools
-            openssl_3_3
-            certstrap
+            python312Packages.uv
+            sqlite
           ];
 
           shellHook = ''
             if [ -z "$NIX_SHELL_NESTED" ]; then
               export NIX_SHELL_NESTED=1
-              alias ipy="ipython --nosep"
-              alias exit="deactivate && exit"
-              export PS1="🧢 \e[38;5;211m\]g\e[38;5;111mBLP\[\e[0m $PS1"
-              if [ ! -d venv ]; then
-                echo "Creating virtual environment in ./venv"
-                python -m venv venv
+              alias ipy="uv run ipython --nosep"
+              export PS1="⛳ \e[38;5;211m\]Trading-Caddy\e[0m $PS1"
+              if [ ! -d .venv ]; then
+                echo "Running uv init, adding ipython and pip"
+                uv init .
+                uv add pip
+                uv add ipython
               fi
-              echo "Activating virtual environment"
-              source venv/bin/activate
+              uv run pip list
             else
-              echo "Nested nix-shell detected, skipping venv creation and activation"
+              echo "Nested nix-shell detected, skipping uv init"
             fi
           '';
         };
