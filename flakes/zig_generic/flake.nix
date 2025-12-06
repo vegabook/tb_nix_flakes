@@ -1,5 +1,5 @@
 {
-  description = "Zigdevelopment environment";
+  description = "Zig basic development environment";
 
   # Flake inputs
   inputs = {
