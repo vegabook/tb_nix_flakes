@@ -1,5 +1,5 @@
 {
-  description = "Python 3.11 development environment";
+  description = "Zigdevelopment environment";
 
   # Flake inputs
   inputs = {
@@ -34,7 +34,6 @@
           shellHook = ''
             if [ -z "$NIX_SHELL_NESTED" ]; then
               export NIX_SHELL_NESTED=1
-              alias ipy="uv run ipython --nosep"
               export PS1="⚡ \e[38;5;214m\][Z] \e[38;5;015m\]ZIG\e[0m $PS1"
             else
               echo "Nested nix-shell detected"
