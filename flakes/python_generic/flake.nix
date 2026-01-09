@@ -42,8 +42,8 @@
           shellHook = ''
             if [ -z "$NIX_SHELL_NESTED" ]; then
               export NIX_SHELL_NESTED=1
-              alias ipy="uv run ipython --nosep --TerminalInteractiveShell.editing_mode=vi --TerminalInteractiveShell.ttimeoutlen=10"
-              alias autopy="uv run ipython --nosep -i --ext autoreload -c '%autoreload 2' --colors=LightBG"
+              alias ipy="uv run ipython --nosep --TerminalInteractiveShell.editing_mode=vi --TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode=False"
+              alias autopy="uv run ipython --nosep -i --ext autoreload -c '%autoreload 2' --colors=LightBG --TerminalInteractiveShell.editing_mode=vi --TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode=False"
               export PS1="⛳ \e[38;5;211m\]Trading-Caddie\e[0m $PS1"
               if [ ! -d .venv ]; then
                 echo "Running uv init, adding ipython and pip"
