@@ -219,4 +219,29 @@ in
   };
 }
 
+# may want this sea5 sshfs script:
 
+##!/usr/bin/env bash
+#nix-shell -p sshfs --run '
+#  sshfs \
+#    tbrowne@sabretruth.org:/mnt/sea5 \
+#    /Users/tbrowne/ssh_sea5/ \
+#    -p 41111 \
+#    -o defer_permissions,reconnect,ServerAliveInterval=15,cache=no
+#    >/dev/null 2>&1 &
+#'
+
+# may also want this unsea5 sshf script to unmount it
+
+##!/usr/bin/env bash
+## Simple unmount for sea5 SSHFS mount
+#MOUNT="/Users/tbrowne/ssh_sea5"
+#echo "Unmounting $MOUNT..."
+## Try the two most reliable commands in order
+#sudo umount -f "$MOUNT" 2>/dev/null && echo "Done (umount -f)" && exit 0
+#sudo diskutil umount force "$MOUNT" 2>/dev/null && echo "Done (diskutil force)" && exit 0
+#echo "Could not unmount automatically."
+#echo "Try closing any programs using the folder, then run:"
+#echo "  diskutil umount force $MOUNT"
+#echo "or just eject it from Finder if it shows up there."
+#
