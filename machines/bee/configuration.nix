@@ -167,6 +167,10 @@
       Peers = [
         tls://london.sabretruth.org:18472
       ];
+      Listen = [
+        "tls://[::]:18472"
+        "quic://[::]:18473"
+      ];
     };
   };
 
