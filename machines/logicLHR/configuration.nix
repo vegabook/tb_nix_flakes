@@ -134,10 +134,24 @@ in
      bantime = "12h"; # Set bantime to one day
    };
 
+   #services.yggdrasil = {
+   #  enable = true;
+   #  configFile = "/home/tbrowne/.config/yggdrasil/yggdrasil_logicLHR.conf";
+   #  group = "wheel";
+   #};
    services.yggdrasil = {
      enable = true;
-     configFile = "/home/tbrowne/.config/yggdrasil/yggdrasil_logicLHR.conf";
+     persistentKeys = true;
      group = "wheel";
+     settings = {
+       Peers = [
+         tcp://vpn.itrus.su:7991
+       ];
+       Listen = [
+         "tcp://[::]:18472"
+         "tls://[::]:18473"
+       ];
+     };
    };
 
    #services.caddy = {
