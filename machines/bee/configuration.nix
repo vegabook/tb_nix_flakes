@@ -93,7 +93,7 @@
      libtool
      btrbk
      xclip
-     lmsensors
+     lm_sensors
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
