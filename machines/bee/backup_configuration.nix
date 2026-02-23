@@ -1,6 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running 'nixos-help').
+# and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
 
@@ -55,14 +55,16 @@
 
   swapDevices = [{
     device = "/swap/swapfile";
-    size = 96 * 1024;
+    size = 96 * 1024; # 
   }];
 
-  # Define a user account. Don't forget to set a password with 'passwd'.
+
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tbrowne = {
     isNormalUser = true;
     description = "Thomas Browne";
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
 
@@ -103,6 +105,7 @@
   #   enableSSHSupport = true;
   # };
 
+
   fileSystems."/export/sea5" = {
     device = "/mnt/sea5";
     options = [ "bind" ];
@@ -115,10 +118,10 @@
         addIgnoredFile = false;
       };
       init = {
-        defaultBranch = "main";
+        defaultBranch = "main"; # Replace "main" with your preferred branch name
       };
       user = {
-        name = "vegabook";
+        name = "vegabook";  # Replace with your preferred name
         email = "thomas.browne@mac.com";
       };
     };
@@ -130,10 +133,6 @@
     ls = "ls --color=tty";
     vim = "nvim";
   };
-
-  # Virtualisation
-  virtualisation.libvirtd.enable = true;
-  programs.virt-manager.enable = true;
 
   # List services that you want to enable:
 
@@ -160,8 +159,8 @@
 
   services.fail2ban = {
      enable = true;
-     maxretry = 5;
-     bantime = "12h";
+     maxretry = 5; # Observe 5 violations before banning an IP
+     bantime = "12h"; # Set bantime to one day
   };
 
   services.yggdrasil = {
@@ -215,13 +214,15 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
+  # on your system were taken. It‘s perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
 
-}
 
+
+}
