@@ -13,6 +13,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.memtest86.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.download-buffer-size = 2147483648;
 
