@@ -50,6 +50,8 @@
     xkb.variant = "";
   };
 
+  services.thermald.enable = true; # thermal management
+
   swapDevices = [{
     device = "/swap/swapfile";
     size = 96 * 1024; # 
@@ -91,6 +93,7 @@
      libtool
      btrbk
      xclip
+     lmsensors
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
