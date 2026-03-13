@@ -76,7 +76,6 @@
      helix
      wget
      htop
-     tmux
      git
      home-manager
      bison
