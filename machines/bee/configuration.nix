@@ -14,8 +14,25 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.memtest86.enable = true;
+  boot.kernelParams = [ "cpufreq.default_governor=schedutil" ]; # for cpu cap at 2ghz
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.download-buffer-size = 2147483648;
+
+
+  systemd.services.cpu-freq-cap = {
+    description = "Cap CPU GHz";
+    wantedBy = [ "sysinit.target" ];
+    after = [ "systemd-udev-settle.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeShellScript "cap-cpu" ''
+        for cpu in /sys/devices/system/cpu/cpu*/cpufreq; do
+          echo 1850000 > "$cpu/scaling_max_freq"
+        done
+      '';
+      RemainAfterExit = true;
+    };
+  };
 
   networking.hostName = "bee"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
