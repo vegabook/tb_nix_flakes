@@ -34,14 +34,7 @@
     };
   };
 
-  networking.hostName = "bee"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
+  networking.hostName = "bee";
   networking.networkmanager.enable = true;
 
   # Set your time zone.
@@ -62,13 +55,7 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
-
-  services.thermald.enable = true; # thermal management
+  services.thermald.enable = true;
 
   swapDevices = [{
     device = "/swap/swapfile";
@@ -80,49 +67,20 @@
     isNormalUser = true;
     description = "Thomas Browne";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
-    packages = with pkgs; [];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim 
+     neovim
      helix
      wget
      htop
      git
      home-manager
-     bison
-     flex
-     fontforge
-     makeWrapper
-     pkg-config
-     gnumake
-     gcc
-     libiconv
-     autoconf
-     automake
-     libtool
-     btrbk
-     xclip
      lm_sensors
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  fileSystems."/export/sea5" = {
-    device = "/mnt/sea5";
-    options = [ "bind" ];
-  };
 
   programs.git = {
     enable = true;
@@ -150,20 +108,6 @@
   # Virtualisation
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
-
-  # List services that you want to enable:
-
-  services.nfs.server.exports = ''
-    /export/sea5         192.168.0.0/16(rw,fsid=0,no_subtree_check,sync,all_squash,anonuid=1000,anongid=100)
-  '';
-
-  services.nfs.server = {
-    enable = true;
-    lockdPort=30011;
-    mountdPort = 30012;
-    statdPort = 30010;
-    extraNfsdConfig = "";
-  };
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -200,47 +144,21 @@
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 
-    111
-    4004
-    2049
-    #ubuntu VM 2222
-    2222 
-    6667
-
-    18472
-    18473
-    20048
-    30010
-    30011
-    30012
-    50051
-    50052
+  networking.firewall.allowedTCPPorts = [
+    4004   # elixir HTTP
+    18472  # yggdrasil
+    18473  # yggdrasil
+    50051  # gBLP bloomberg gRPC
+    50052  # gBLP bloomberg gRPC
   ];
-  networking.firewall.allowedUDPPorts = [ 
-    111
-    4004
-    2049
-    6667
-    18472
-    18473
-    20048
-    30010
-    30011
-    30012
-    50051
-    50052
+  networking.firewall.allowedUDPPorts = [
+    4004   # elixir HTTP
+    18472  # yggdrasil
+    18473  # yggdrasil
+    50051  # gBLP bloomberg gRPC
+    50052  # gBLP bloomberg gRPC
   ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.11"; # Did you read the comment?
+  system.stateVersion = "23.11";
 
 }
 
