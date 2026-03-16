@@ -27,7 +27,7 @@
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "cap-cpu" ''
         for cpu in /sys/devices/system/cpu/cpu*/cpufreq; do
-          echo 1900000 > "$cpu/scaling_max_freq"
+          echo 2000000 > "$cpu/scaling_max_freq"
         done
       '';
       RemainAfterExit = true;
