@@ -21,6 +21,10 @@
       nixpkgs.hostPlatform = "aarch64-darwin";
 
       users.users.tbrowne.home = "/Users/tbrowne";
+
+			system.activationScripts.extraActivation.text = ''
+				ln -sfn /Volumes/T5 /Users/tbrowne/T5
+			'';
     };
   in
   {
