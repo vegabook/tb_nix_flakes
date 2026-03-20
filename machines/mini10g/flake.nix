@@ -32,6 +32,7 @@
         };
         casks = [
           "affinity"
+          "transmission"
         ];
       };
 
