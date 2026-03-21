@@ -35,6 +35,9 @@
           "transmission"
           "firefox"
           "claude"
+          "blender"
+          "whatsapp"
+          "telegram"
         ];
       };
 
