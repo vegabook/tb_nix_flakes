@@ -5,46 +5,81 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:nix-darwin/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    nix-homebrew.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
   let
     configuration = { pkgs, ... }: {
-      system.primaryUser = "tbrowne";      
-      # homebrew
+      system.primaryUser = "tbrowne";
+
+      # nix-homebrew — installs Homebrew itself declaratively
+      nix-homebrew = {
+        enable = true;
+        user = "tbrowne";
+        autoMigrate = true;  # safely imports any old manual brew install
+      };
+
+      # Your casks (managed by nix-darwin's homebrew module)
       homebrew = {
         enable = true;
         onActivation = {
-          autoUpdate = true;   
-          upgrade = true;      
-          cleanup = "zap";    
+          autoUpdate = true;
+          upgrade = true;
+          cleanup = "zap";
         };
         casks = [
-          "raycast"
           "affinity"
+          "transmission"
         ];
       };
 
-      environment.systemPackages =
-        [ pkgs.vim
-        ];
-
+      environment.systemPackages = [ pkgs.vim ];
       nix.settings.experimental-features = "nix-command flakes";
-
       system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 6;
-      nixpkgs.hostPlatform = "aarch64-darwin";
-
       users.users.tbrowne.home = "/Users/tbrowne";
 
-			system.activationScripts.extraActivation.text = ''
-				ln -sfn /Volumes/T5 /Users/tbrowne/T5
-			'';
+      # Enable SSH for headless/server access
+      services.openssh.enable = true;
+
+      system.activationScripts.extraActivation.text = ''
+        ln -sfn /Volumes/T5 /Users/tbrowne/T5
+
+        # Disable Spotlight indexing (~500MB: Spotlight, mds, mds_stores, corespotlightd, suggestd)
+        mdutil -a -i off 2>/dev/null || true
+
+        uid=$(id -u tbrowne)
+
+        # Disable metadata/Spotlight daemons
+        launchctl disable system/com.apple.metadata.mds 2>/dev/null || true
+        launchctl disable "gui/$uid/com.apple.Spotlight" 2>/dev/null || true
+        launchctl disable "gui/$uid/com.apple.suggestd" 2>/dev/null || true
+
+        # Disable media/photo analysis (~130MB)
+        launchctl disable system/com.apple.mediaanalysisd 2>/dev/null || true
+        launchctl disable system/com.apple.photoanalysisd 2>/dev/null || true
+
+        # Disable iCloud sync daemons (~150MB: bird, cloudd)
+        launchctl disable "gui/$uid/com.apple.bird" 2>/dev/null || true
+        launchctl disable "gui/$uid/com.apple.cloudd" 2>/dev/null || true
+
+        # Disable desktop widgets (macOS Sonoma+)
+        launchctl disable "gui/$uid/com.apple.chronod" 2>/dev/null || true
+        defaults write com.apple.WindowManager StandardHideWidgets -bool true 2>/dev/null || true
+      '';
     };
   in
   {
     darwinConfigurations."mini10g" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+      system = "aarch64-darwin";  # ← This fixes the hostPlatform error
+
+      modules = [
+        configuration
+        nix-homebrew.darwinModules.nix-homebrew
+      ];
     };
   };
 }

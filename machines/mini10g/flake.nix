@@ -42,6 +42,9 @@
       system.stateVersion = 6;
       users.users.tbrowne.home = "/Users/tbrowne";
 
+      # Enable SSH for headless/server access
+      services.openssh.enable = true;
+
       system.activationScripts.extraActivation.text = ''
         ln -sfn /Volumes/T5 /Users/tbrowne/T5
       '';
