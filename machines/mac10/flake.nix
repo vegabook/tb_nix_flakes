@@ -33,6 +33,8 @@
         casks = [
           "affinity"
           "transmission"
+          "firefox"
+          "claude"
         ];
       };
 
@@ -51,7 +53,7 @@
     };
   in
   {
-    darwinConfigurations."mini10g" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."mac10" = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";  # ← This fixes the hostPlatform error
 
       modules = [
