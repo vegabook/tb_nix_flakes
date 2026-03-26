@@ -40,7 +40,7 @@
       system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 6;
       users.users.tbrowne.home = "/Users/tbrowne";
-      power.sleep.display = 0;
+      power.sleep.display = "never";
       system.defaults.screensaver.askForPassword = false;
 
       # Enable SSH for headless/server access
