@@ -31,12 +31,6 @@
           cleanup = "zap";
         };
         casks = [
-          "affinity"
-          "transmission"
-          "firefox"
-          "claude"
-          "blender"
-          "whatsapp"
           "telegram"
         ];
       };
@@ -48,7 +42,14 @@
       users.users.tbrowne.home = "/Users/tbrowne";
 
       # Enable SSH for headless/server access
-      services.openssh.enable = true;
+      services.openssh = {
+        enable = true;
+        extraConfig = ''
+          # Disable password login (use keys only)
+          PasswordAuthentication no
+          PubkeyAuthentication yes
+        '';
+      };
 
       system.activationScripts.extraActivation.text = ''
         ln -sfn /Volumes/T5 /Users/tbrowne/T5
