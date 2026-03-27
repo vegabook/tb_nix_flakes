@@ -36,6 +36,10 @@
       };
 
       environment.systemPackages = [ pkgs.vim ];
+      environment.variables = {
+        LANG = "en_US.UTF-8";
+        LC_ALL = "en_US.UTF-8";
+      };
       nix.settings.experimental-features = "nix-command flakes";
       system.configurationRevision = self.rev or self.dirtyRev or null;
       system.stateVersion = 6;
@@ -60,6 +64,7 @@
           PasswordAuthentication no
           KbdInteractiveAuthentication no
           PubkeyAuthentication yes
+          AcceptEnv LANG LC_*
         '';
       };
 
