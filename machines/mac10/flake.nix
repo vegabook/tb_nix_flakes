@@ -43,12 +43,22 @@
       power.sleep.display = "never";
       system.defaults.screensaver.askForPassword = false;
 
+      # T5 external ssd
+      launchd.daemons.mount-t5 = {
+        serviceConfig = {
+          Label = "com.local.mount-t5";
+          ProgramArguments = [ "/usr/sbin/diskutil" "mount" "T5" ];
+          RunAtLoad = true;
+        };
+      };
+
       # Enable SSH for headless/server access
       services.openssh = {
         enable = true;
         extraConfig = ''
           # Disable password login (use keys only)
           PasswordAuthentication no
+          KbdInteractiveAuthentication no
           PubkeyAuthentication yes
         '';
       };
