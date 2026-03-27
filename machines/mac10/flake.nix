@@ -32,6 +32,8 @@
         };
         casks = [
           "telegram"
+          "firefox"
+          "whatsapp"
         ];
       };
 
