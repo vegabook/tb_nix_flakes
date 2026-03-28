@@ -48,6 +48,7 @@
       users.users.tbrowne.home = "/Users/tbrowne";
       power.sleep.display = "never";
       system.defaults.screensaver.askForPassword = false;
+      system.defaults.loginwindow.autoLoginUser = "tbrowne";
 
       # T5 external ssd
       launchd.daemons.mount-t5 = {
