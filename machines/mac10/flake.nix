@@ -34,6 +34,7 @@
           "telegram"
           "firefox"
           "whatsapp"
+          "claude"
         ];
       };
 
