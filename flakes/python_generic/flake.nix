@@ -32,12 +32,6 @@
             python312Packages.uv
             python312Packages.numpy
             python312Packages.ipdb
-            sqlite
-            libsixel
-            R
-            rPackages.arrow
-            rPackages.xts
-            typst
           ];
 
           shellHook = ''
@@ -45,7 +39,7 @@
               export NIX_SHELL_NESTED=1
               alias ipy="uv run ipython --nosep --TerminalInteractiveShell.editing_mode=vi --TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode=False"
               alias autopy="uv run ipython --nosep -i --ext autoreload -c '%autoreload 2' --colors=LightBG --TerminalInteractiveShell.editing_mode=vi --TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode=False"
-              export PS1="⛳ \e[38;5;211m\]Trading-Caddie\e[0m $PS1"
+              export PS1="🐍\e[38;5;211m\]Generic_python_env\e[0m $PS1"
               export PYTHONBREAKPOINT=ipdb.set_trace
               if [ ! -d .venv ]; then
                 # test if file pyproject.toml exists in current directory 
