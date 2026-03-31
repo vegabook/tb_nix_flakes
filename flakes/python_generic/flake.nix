@@ -32,6 +32,7 @@
             python312Packages.uv
             python312Packages.numpy
             python312Packages.ipdb
+            python312Packages.pip
           ];
 
           shellHook = ''
