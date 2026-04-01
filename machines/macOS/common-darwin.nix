@@ -29,6 +29,10 @@
   system.defaults.screensaver.askForPassword = false;
   system.defaults.loginwindow.autoLoginUser = "tbrowne";
 
+  system.activationScripts.extraActivation.text = ''
+    ln -sfn "/Users/tbrowne/Library/Mobile Documents/com~apple~CloudDocs" /Users/tbrowne/iCloud
+  '';
+
   services.openssh = {
     enable = true;
     extraConfig = ''
