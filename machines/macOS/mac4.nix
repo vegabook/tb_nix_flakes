@@ -1,5 +1,6 @@
 { ... }: {
   homebrew.casks = [
     "affinity"
+    "blender"
   ];
 }
