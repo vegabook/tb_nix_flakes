@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   system.primaryUser = "tbrowne";
 
   nix-homebrew = {
@@ -7,8 +7,45 @@
     autoMigrate = true;
   };
 
+
+  # === Yggdrasil Mesh Network (now properly defined) ===
+  environment.systemPackages = [ pkgs.vim pkgs.yggdrasil ];
+
+  # This creates the `yggdrasil` option you were using
+  options.yggdrasil = {
+    enable = lib.mkEnableOption "Yggdrasil overlay network";
+    settings = lib.mkOption {
+      type = lib.types.attrs;
+      default = {};
+      description = "Yggdrasil configuration (converted to JSON and passed via stdin)";
+    };
+  };
+
+  config = lib.mkIf config.yggdrasil.enable {
+    launchd.user.agents.yggdrasil = {
+      serviceConfig = {
+        KeepAlive = true;
+        RunAtLoad = true;
+        StandardOutPath = "/tmp/yggdrasil.stdout.log";
+        StandardErrorPath = "/tmp/yggdrasil.stderr.log";
+      };
+
+      # Declarative config via stdin (-useconf). No /etc file needed.
+      script = ''
+        exec ${pkgs.yggdrasil}/bin/yggdrasil --useconf <<'EOC'
+${builtins.toJSON config.yggdrasil.settings}
+EOC
+      '';
+    };
+  };
+
   yggdrasil = {
     enable = true;
+    settings = {
+      Peers = [
+        "tls://london.sabretruth.org:18472"
+      ];
+    };
   };
 
   homebrew = {
