@@ -7,6 +7,10 @@
     autoMigrate = true;
   };
 
+  yggdrasil = {
+    enable = true;
+  };
+
   homebrew = {
     enable = true;
     onActivation = {
