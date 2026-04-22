@@ -158,11 +158,11 @@ in
    #  enable = true;
 #
 #     virtualHosts."aspectdelta.com".extraConfig = ''
-# 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
+#   reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
 #     '';
 # 
 #     virtualHosts."sabretruth.org".extraConfig = ''
-# 	reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
+#   reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
 #     '';
 #     virtualHosts."sabertruth.com".extraConfig = ''
 #       redir https://sabretruth.org{uri}
@@ -181,18 +181,18 @@ in
     virtualHosts = {
       # Main site
       "sabretruth.org" = {
-	hostName = "sabretruth.org";
-	extraConfig = ''
-	  reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
-	'';
+        hostName = "sabretruth.org";
+        extraConfig = ''
+          reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
+        '';
       };
 
       # The other site
       "aspectdelta.com" = {
-	hostName = "aspectdelta.com";
-	extraConfig = ''
-	  reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
-	'';
+        hostName = "aspectdelta.com";
+        extraConfig = ''
+          reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
+        '';
       };
     };
   };
@@ -201,23 +201,22 @@ in
     enable = true;
     config = ''
       global
-	daemon
-	maxconn 10000
+        daemon
+        maxconn 10000
 
       defaults
-	timeout connect 500s
-	timeout client 5000s
-	timeout server 1h
+        timeout connect 500s
+        timeout client 5000s
+        timeout server 1h
 
       frontend sshd
-	bind *:41111
-	default_backend ssh
-	timeout client 1h
+        bind *:41111
+        default_backend ssh
+        timeout client 1h
 
       backend ssh
-	mode tcp
-	server ipv6 [200:5483:a5f4:c957:d29d:ec17:381d:eebc]:41111
-
+        mode tcp
+        server ipv6 [200:5483:a5f4:c957:d29d:ec17:381d:eebc]:41111
     '';
   };
 
