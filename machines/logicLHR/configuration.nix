@@ -58,7 +58,7 @@ in
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.postgres = {
+  services.postgresql = {
     enable = true;
   };
 
