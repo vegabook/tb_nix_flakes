@@ -9,19 +9,6 @@
 
   environment.systemPackages = [ pkgs.vim pkgs.yggdrasil ];
 
-  launchd.daemons.yggdrasil = {
-    serviceConfig = {
-      KeepAlive = true;
-      RunAtLoad = true;
-      StandardOutPath = "/tmp/yggdrasil.stdout.log";
-      StandardErrorPath = "/tmp/yggdrasil.stderr.log";
-    };
-
-    script = ''
-      exec ${pkgs.yggdrasil}/bin/yggdrasil -useconffile /Users/tbrowne/.yggdrasil/yggdrasil.conf
-    '';
-  };
-
   homebrew = {
     enable = true;
     onActivation = {
