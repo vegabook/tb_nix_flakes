@@ -146,15 +146,11 @@
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
     4004   # elixir HTTP
-    18472  # yggdrasil
-    18473  # yggdrasil
     50051  # gBLP bloomberg gRPC
     50052  # gBLP bloomberg gRPC
   ];
   networking.firewall.allowedUDPPorts = [
     4004   # elixir HTTP
-    18472  # yggdrasil
-    18473  # yggdrasil
     50051  # gBLP bloomberg gRPC
     50052  # gBLP bloomberg gRPC
   ];
