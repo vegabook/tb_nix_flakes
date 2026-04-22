@@ -194,6 +194,14 @@ in
           reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
         '';
       };
+
+      "macrocaddie.signaliser.com" = {
+        hostName = "macrocaddie.signaliser.com";
+        extraConfig = ''
+          reverse_proxy http://127.0.0.1:8080
+        '';
+      };
+
     };
   };
 
