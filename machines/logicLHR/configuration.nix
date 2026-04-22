@@ -58,6 +58,10 @@ in
     LC_TIME = "en_US.UTF-8";
   };
 
+  services.postgres = {
+    enable = true;
+  };
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
