@@ -199,6 +199,13 @@ in
         '';
       };
 
+      "acyclicresearch.org" = {
+        hostName = "acyclicresearch.org";
+        extraConfig = ''
+          reverse_proxy http://127.0.0.1:4000
+        '';
+      };
+
       "macrocaddie.signaliser.com" = {
         hostName = "macrocaddie.signaliser.com";
         extraConfig = ''
