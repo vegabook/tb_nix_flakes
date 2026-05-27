@@ -206,8 +206,8 @@ in
         '';
       };
 
-      "macrocaddie.signaliser.com" = {
-        hostName = "macrocaddie.signaliser.com";
+      "var.macrocaddie.com" = {
+        hostName = "var.macrocaddie.com";
         extraConfig = ''
           reverse_proxy http://127.0.0.1:8080
         '';
