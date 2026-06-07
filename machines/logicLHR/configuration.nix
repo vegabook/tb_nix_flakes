@@ -158,26 +158,6 @@ in
      };
    };
 
-   #services.caddy = {
-   #  enable = true;
-#
-#     virtualHosts."aspectdelta.com".extraConfig = ''
-#   reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
-#     '';
-# 
-#     virtualHosts."sabretruth.org".extraConfig = ''
-#   reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
-#     '';
-#     virtualHosts."sabertruth.com".extraConfig = ''
-#       redir https://sabretruth.org{uri}
-#     '';
-#     virtualHosts."sabretruth.com".extraConfig = ''
-#       redir https://sabretruth.org{uri}
-#     '';
-#     virtualHosts."sabertruth.org".extraConfig = ''
-#       redir https://sabretruth.org{uri}
-#     '';
-#  };
 
   services.caddy = {
     enable = true;
@@ -210,6 +190,13 @@ in
         hostName = "var.macrocaddie.com";
         extraConfig = ''
           reverse_proxy http://127.0.0.1:8080
+        '';
+      };
+
+      "delphos.suprabonds.com" = {
+        hostName = "delphos.suprabonds.com";
+        extraConfig = ''
+          reverse_proxy http://127.0.0.1:4001
         '';
       };
 
