@@ -36,6 +36,15 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Prefer IPv4 over IPv6 in getaddrinfo. This box has no global v6 on ens3
+  # (SLAAC doesn't yield an address on this VPS), so the kernel picks the
+  # Yggdrasil 0200::/7 source for outbound v6 → upstream drops it →
+  # 150s SYN timeouts on every connect to v6-resolvable public hosts.
+  # Yggdrasil itself is unaffected (it uses raw 0200::/7, not DNS).
+  environment.etc."gai.conf".text = ''
+    precedence ::ffff:0:0/96  100
+  '';
+
   # Set your time zone.
   # time.timeZone = "America/New_York"; ## NOTE change for other systems
   services.automatic-timezoned.enable = true;
