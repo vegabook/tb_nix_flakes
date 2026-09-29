@@ -172,15 +172,9 @@ in
     enable = true;
 
     virtualHosts = {
-      # Main site
-      "sabretruth.org" = {
-        hostName = "sabretruth.org";
-        extraConfig = ''
-          reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4004
-        '';
-      };
 
-      # The other site
+      # The other site 
+      
       "aspectdelta.com" = {
         hostName = "aspectdelta.com";
         extraConfig = ''
@@ -209,13 +203,6 @@ in
         '';
       };
 
-      "cris.signaliser.com" = {
-        hostName = "cris.signaliser.com";
-        extraConfig = ''
-          reverse_proxy http://127.0.0.1:4002
-        '';
-      };
-
     };
   };
 
@@ -235,6 +222,27 @@ in
         bind *:41111
         default_backend ssh
         timeout client 1h
+
+
+      frontend grpc_in
+        bind *:50051
+        mode tcp
+        default_backend grpc_out
+        timeout client 1h
+
+      frontend grpckey_in
+        bind *:50052
+        mode tcp
+        default_backend grpckey_out
+        timeout client 1h
+
+      backend grpc_out
+        mode tcp
+        server grpc_target 45.92.36.214:50051 
+
+      backend grpckey_out
+        mode tcp
+        server grpckey_target 45.92.36.214:50052
 
       backend ssh
         mode tcp
