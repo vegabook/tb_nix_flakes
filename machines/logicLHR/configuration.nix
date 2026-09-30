@@ -182,20 +182,6 @@ in
         '';
       };
 
-      "acyclicresearch.org" = {
-        hostName = "acyclicresearch.org";
-        extraConfig = ''
-          reverse_proxy http://127.0.0.1:4000
-        '';
-      };
-
-      "var.macrocaddie.com" = {
-        hostName = "var.macrocaddie.com";
-        extraConfig = ''
-          reverse_proxy http://127.0.0.1:8080
-        '';
-      };
-
       "delphos.suprabonds.com" = {
         hostName = "delphos.suprabonds.com";
         extraConfig = ''
