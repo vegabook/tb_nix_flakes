@@ -189,6 +189,14 @@ in
         '';
       };
 
+
+      "suprabonds.com" = {
+        hostName = "suprabonds.com";
+        extraConfig = ''
+          reverse_proxy http://127.0.0.1:4001
+        '';
+      };
+
     };
   };
 
