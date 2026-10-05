@@ -182,18 +182,17 @@ in
         '';
       };
 
-      "delphos.suprabonds.com" = {
-        hostName = "delphos.suprabonds.com";
+      "suprabonds.org" = {
+        hostName = "suprabonds.org";
         extraConfig = ''
           reverse_proxy http://127.0.0.1:4001
         '';
       };
 
-
       "suprabonds.com" = {
         hostName = "suprabonds.com";
         extraConfig = ''
-          reverse_proxy http://127.0.0.1:4001
+          redir https://suprabonds.org{uri} permanent
         '';
       };
 
