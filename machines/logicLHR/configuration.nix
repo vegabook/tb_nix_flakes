@@ -136,36 +136,36 @@ in
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-   services.openssh = {
-     enable = true;
-     settings.PasswordAuthentication = false;
-   };
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+  };
 
-   services.fail2ban = {
-     enable = true;
-     maxretry = 5; # Observe 5 violations before banning an IP
-     bantime = "12h"; # Set bantime to one day
-   };
+  services.fail2ban = {
+    enable = true;
+    maxretry = 5; # Observe 5 violations before banning an IP
+    bantime = "12h"; # Set bantime to one day
+  };
 
-   #services.yggdrasil = {
-   #  enable = true;
-   #  configFile = "/home/tbrowne/.config/yggdrasil/yggdrasil_logicLHR.conf";
-   #  group = "wheel";
-   #};
-   services.yggdrasil = {
-     enable = true;
-     persistentKeys = true;
-     group = "wheel";
-     settings = {
-       Peers = [
-         tcp://vpn.itrus.su:7991
-       ];
-       Listen = [
-         "tls://[::]:18472"
-         "tcp://[::]:18473"
-       ];
-     };
-   };
+  #services.yggdrasil = {
+  #  enable = true;
+  #  configFile = "/home/tbrowne/.config/yggdrasil/yggdrasil_logicLHR.conf";
+  #  group = "wheel";
+  #};
+  services.yggdrasil = {
+    enable = true;
+    persistentKeys = true;
+    group = "wheel";
+    settings = {
+      Peers = [
+        tcp://vpn.itrus.su:7991
+      ];
+      Listen = [
+        "tls://[::]:18472"
+        "tcp://[::]:18473"
+      ];
+    };
+  };
 
 
   services.caddy = {
@@ -285,6 +285,32 @@ in
   #    User = "root";
   #  };
   #};
+
+  # ===== BEGIN: added by Claude (Claude Code) =====
+  # Runs the suprabonds Phoenix app (~/code/suprabonds) on every boot via
+  # `nix develop --command mix phx.server`, so it uses the project's own
+  # flake dev shell (same Elixir/OTP versions as interactive use).
+  # Runs in MIX_ENV=dev on 127.0.0.1:4001, which Caddy proxies for suprabonds.org.
+  # Manage with: systemctl status|restart|stop suprabonds
+  # Logs:        journalctl -u suprabonds -f
+  systemd.services.suprabonds = {
+    description = "Suprabonds Phoenix server";
+    wantedBy = [ "multi-user.target" ];  # start at boot
+    after    = [ "network-online.target" "postgresql.service" ];
+    wants    = [ "network-online.target" ];
+    requires = [ "postgresql.service" ];  # app uses Ecto/Postgres on localhost
+
+    path = [ pkgs.nix pkgs.git pkgs.bash ];  # services get a near-empty PATH
+
+    serviceConfig = {
+      User = "tbrowne";
+      WorkingDirectory = "/home/tbrowne/code/suprabonds";
+      ExecStart = "${pkgs.nix}/bin/nix develop --command mix phx.server";
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+  # ===== END: added by Claude (Claude Code) =====
 
 
   # networking.firewall.allowedUDPPorts = [ ... ];
