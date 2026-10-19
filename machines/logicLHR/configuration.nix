@@ -161,8 +161,9 @@ in
         tcp://vpn.itrus.su:7991
       ];
       Listen = [
-        "tls://[::]:18472"
-        "tcp://[::]:18473"
+        #uncomment for public peers
+        #"tls://[::]:18472"
+        #"tcp://[::]:18473"
       ];
     };
   };
@@ -244,7 +245,9 @@ in
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 18472 18473 50051 50052 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 
+    # 18472 18473 uncomment for public yggdrasil
+    50051 50052 ];
 
   #systemd.timers."example_python_script" = {
   #wantedBy = [ "timers.target" ];
