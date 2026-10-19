@@ -197,6 +197,19 @@ in
         '';
       };
 
+      "acyclicresearch.org" = {
+        hostName = "acyclicresearch.org";
+        extraConfig = ''
+          reverse_proxy http://127.0.0.1:4002
+        '';
+      };
+
+      "acyclicresearch.com" = {
+        hostName = "acyclicresearch.com";
+        extraConfig = ''
+          redir https://acyclicresearch.org{uri} permanent
+        '';
+      };
     };
   };
 
@@ -308,6 +321,24 @@ in
     serviceConfig = {
       User = "tbrowne";
       WorkingDirectory = "/home/tbrowne/code/suprabonds";
+      ExecStart = "${pkgs.nix}/bin/nix develop --command mix phx.server";
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+
+  systemd.services.acyclic_research = {
+    description = "Acyclic Research Phoenix server";
+    wantedBy = [ "multi-user.target" ];  # start at boot
+    after    = [ "network-online.target" "postgresql.service" ];
+    wants    = [ "network-online.target" ];
+    requires = [ "postgresql.service" ];  # app uses Ecto/Postgres on localhost
+
+    path = [ pkgs.nix pkgs.git pkgs.bash ];  # services get a near-empty PATH
+
+    serviceConfig = {
+      User = "tbrowne";
+      WorkingDirectory = "/home/tbrowne/code/acyclic_research";
       ExecStart = "${pkgs.nix}/bin/nix develop --command mix phx.server";
       Restart = "always";
       RestartSec = 5;
