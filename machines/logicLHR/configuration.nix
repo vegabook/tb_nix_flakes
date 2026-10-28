@@ -36,15 +36,6 @@ in
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Prefer IPv4 over IPv6 in getaddrinfo. This box has no global v6 on ens3
-  # (SLAAC doesn't yield an address on this VPS), so the kernel picks the
-  # Yggdrasil 0200::/7 source for outbound v6 → upstream drops it →
-  # 150s SYN timeouts on every connect to v6-resolvable public hosts.
-  # Yggdrasil itself is unaffected (it uses raw 0200::/7, not DNS).
-  environment.etc."gai.conf".text = ''
-    precedence ::ffff:0:0/96  100
-  '';
-
   # Set your time zone.
   # time.timeZone = "America/New_York"; ## NOTE change for other systems
   services.automatic-timezoned.enable = true;
@@ -147,41 +138,10 @@ in
     bantime = "12h"; # Set bantime to one day
   };
 
-  #services.yggdrasil = {
-  #  enable = true;
-  #  configFile = "/home/tbrowne/.config/yggdrasil/yggdrasil_logicLHR.conf";
-  #  group = "wheel";
-  #};
-  services.yggdrasil = {
-    enable = true;
-    persistentKeys = true;
-    group = "wheel";
-    settings = {
-      Peers = [
-        tcp://vpn.itrus.su:7991
-      ];
-      Listen = [
-        #uncomment for public peers
-        #"tls://[::]:18472"
-        #"tcp://[::]:18473"
-      ];
-    };
-  };
-
-
   services.caddy = {
     enable = true;
 
     virtualHosts = {
-
-      # The other site 
-      
-      "aspectdelta.com" = {
-        hostName = "aspectdelta.com";
-        extraConfig = ''
-          reverse_proxy http://[200:5483:a5f4:c957:d29d:ec17:381d:eebc]:4000
-        '';
-      };
 
       "suprabonds.org" = {
         hostName = "suprabonds.org";
@@ -192,6 +152,7 @@ in
 
       "suprabonds.com" = {
         hostName = "suprabonds.com";
+        serverAliases = [ "www.suprabonds.com" "www.suprabonds.org" ];
         extraConfig = ''
           redir https://suprabonds.org{uri} permanent
         '';
@@ -206,6 +167,7 @@ in
 
       "acyclicresearch.com" = {
         hostName = "acyclicresearch.com";
+        serverAliases = [ "www.acyclicresearch.com" "www.acyclicresearch.org" ];
         extraConfig = ''
           redir https://acyclicresearch.org{uri} permanent
         '';
@@ -224,12 +186,6 @@ in
         timeout connect 500s
         timeout client 5000s
         timeout server 1h
-
-      frontend sshd
-        bind *:41111
-        default_backend ssh
-        timeout client 1h
-
 
       frontend grpc_in
         bind *:50051
@@ -250,17 +206,11 @@ in
       backend grpckey_out
         mode tcp
         server grpckey_target 45.92.36.214:50052
-
-      backend ssh
-        mode tcp
-        server ipv6 [200:5483:a5f4:c957:d29d:ec17:381d:eebc]:41111
     '';
   };
 
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 80 443 41111 7007 7008 
-    # 18472 18473 uncomment for public yggdrasil
-    50051 50052 ];
+  # Open ports in the firewall: web (Caddy) and the gBLP relay (haproxy)
+  networking.firewall.allowedTCPPorts = [ 80 443 50051 50052 ];
 
   #systemd.timers."example_python_script" = {
   #wantedBy = [ "timers.target" ];
