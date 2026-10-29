@@ -99,6 +99,8 @@ in
     zoxide
     weechat
     nostr-rs-relay
+    awscli2
+    ssm-session-manager-plugin
   ];
 
   programs.bash.promptInit =  ''
@@ -170,6 +172,13 @@ in
         serverAliases = [ "www.acyclicresearch.com" "www.acyclicresearch.org" ];
         extraConfig = ''
           redir https://acyclicresearch.org{uri} permanent
+        '';
+      };
+
+      "var.macrocaddie.com" = {
+        hostName = "var.macrocaddie.com";
+        extraConfig = ''
+          reverse_proxy http://127.0.0.1:8080
         '';
       };
     };
