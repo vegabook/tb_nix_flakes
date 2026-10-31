@@ -142,6 +142,9 @@ in
 
   services.caddy = {
     enable = true;
+    # Secrets kept out of this (public) repo, as {$VAR} placeholders below:
+    # DEV_AUTH_HASH, the dev site's password hash, in single quotes
+    environmentFile = "/home/tbrowne/.config/acyclic_research/caddy.env";
 
     virtualHosts = {
 
@@ -160,9 +163,22 @@ in
         '';
       };
 
+      # The public site: the production build (acyclic_research_prod)
       "acyclicresearch.org" = {
         hostName = "acyclicresearch.org";
         extraConfig = ''
+          reverse_proxy http://127.0.0.1:4003
+        '';
+      };
+
+      # The dev preview, with live reload (acyclic_research), behind a
+      # password. Make the hash with: caddy hash-password
+      "dev.acyclicresearch.org" = {
+        hostName = "dev.acyclicresearch.org";
+        extraConfig = ''
+          basic_auth {
+            tbrowne {$DEV_AUTH_HASH}
+          }
           reverse_proxy http://127.0.0.1:4002
         '';
       };
@@ -286,6 +302,9 @@ in
     };
   };
 
+  # The Acyclic Research dev preview: MIX_ENV=dev with live reload, from the
+  # working copy, on 127.0.0.1:4002, which Caddy serves as
+  # dev.acyclicresearch.org behind a password.
   systemd.services.acyclic_research = {
     description = "Acyclic Research Phoenix server";
     wantedBy = [ "multi-user.target" ];  # start at boot
@@ -303,6 +322,40 @@ in
       RestartSec = 5;
     };
   };
+
+  # The public acyclicresearch.org: MIX_ENV=prod on 127.0.0.1:4003, from a
+  # separate checkout of main that only scripts/deploy (in the repo) updates
+  # and builds. Secrets are in prod.env, outside the nix store.
+  # Deploy:  ~/code/acyclic_research/scripts/deploy
+  # Logs:    journalctl -u acyclic_research_prod -f
+  systemd.services.acyclic_research_prod = {
+    description = "Acyclic Research Phoenix server (production)";
+    wantedBy = [ "multi-user.target" ];
+    after    = [ "network-online.target" "postgresql.service" ];
+    wants    = [ "network-online.target" ];
+    requires = [ "postgresql.service" ];
+
+    path = [ pkgs.nix pkgs.git pkgs.bash ];
+    environment.MIX_ENV = "prod";
+
+    serviceConfig = {
+      User = "tbrowne";
+      WorkingDirectory = "/home/tbrowne/deploy/acyclic_research";
+      EnvironmentFile = "/home/tbrowne/.config/acyclic_research/prod.env";
+      ExecStart = "${pkgs.nix}/bin/nix develop --command mix phx.server";
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+
+  # Lets scripts/deploy restart the production server without a password
+  security.sudo.extraRules = [{
+    users = [ "tbrowne" ];
+    commands = [{
+      command = "/run/current-system/sw/bin/systemctl restart acyclic_research_prod";
+      options = [ "NOPASSWD" ];
+    }];
+  }];
   # ===== END: added by Claude (Claude Code) =====
 
 
