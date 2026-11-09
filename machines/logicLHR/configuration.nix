@@ -143,7 +143,7 @@ in
   services.caddy = {
     enable = true;
     # Secrets kept out of this (public) repo, as {$VAR} placeholders below:
-    # DEV_AUTH_HASH, the dev site's password hash, in single quotes
+    # DEV_AUTH_HASH, the dev and viz sites' password hash, in single quotes
     environmentFile = "/home/tbrowne/.config/acyclic_research/caddy.env";
 
     virtualHosts = {
@@ -160,6 +160,18 @@ in
         serverAliases = [ "www.suprabonds.com" "www.suprabonds.org" ];
         extraConfig = ''
           redir https://suprabonds.org{uri} permanent
+        '';
+      };
+
+      # Livebook for ~/code/supraviz (started by hand with its ./run), behind
+      # the dev.acyclicresearch.org password
+      "viz.suprabonds.org" = {
+        hostName = "viz.suprabonds.org";
+        extraConfig = ''
+          basic_auth {
+            tbrowne {$DEV_AUTH_HASH}
+          }
+          reverse_proxy http://127.0.0.1:8090
         '';
       };
 
