@@ -148,10 +148,21 @@ in
 
     virtualHosts = {
 
+      # /markets is ~/code/supraviz (started by hand with its ./run), behind
+      # the dev.acyclicresearch.org password
       "suprabonds.org" = {
         hostName = "suprabonds.org";
         extraConfig = ''
-          reverse_proxy http://127.0.0.1:4001
+          redir /markets /markets/
+          handle_path /markets/* {
+            basic_auth {
+              tbrowne {$DEV_AUTH_HASH}
+            }
+            reverse_proxy http://127.0.0.1:8090
+          }
+          handle {
+            reverse_proxy http://127.0.0.1:4001
+          }
         '';
       };
 
@@ -163,15 +174,11 @@ in
         '';
       };
 
-      # Livebook for ~/code/supraviz (started by hand with its ./run), behind
-      # the dev.acyclicresearch.org password
+      # supraviz's old home
       "viz.suprabonds.org" = {
         hostName = "viz.suprabonds.org";
         extraConfig = ''
-          basic_auth {
-            tbrowne {$DEV_AUTH_HASH}
-          }
-          reverse_proxy http://127.0.0.1:8090
+          redir https://suprabonds.org/markets{uri} permanent
         '';
       };
 
