@@ -297,24 +297,26 @@ in
   #};
 
   # ===== BEGIN: added by Claude (Claude Code) =====
-  # Runs the suprabonds Phoenix app (~/code/suprabonds) on every boot via
-  # `nix develop --command mix phx.server`, so it uses the project's own
-  # flake dev shell (same Elixir/OTP versions as interactive use).
-  # Runs in MIX_ENV=dev on 127.0.0.1:4001, which Caddy proxies for suprabonds.org.
-  # Manage with: systemctl status|restart|stop suprabonds
-  # Logs:        journalctl -u suprabonds -f
-  systemd.services.suprabonds = {
-    description = "Suprabonds Phoenix server";
-    wantedBy = [ "multi-user.target" ];  # start at boot
+  # The public suprabonds.org: MIX_ENV=prod on 127.0.0.1:4001, from a
+  # separate checkout of main that only scripts/deploy (in the repo) updates
+  # and builds. Secrets are in prod.env, outside the nix store; it alone runs
+  # syncs and the live feed (SUPRABONDS_WORKERS=1).
+  # Deploy:  ~/code/suprabonds/scripts/deploy
+  # Logs:    journalctl -u suprabonds_prod -f
+  systemd.services.suprabonds_prod = {
+    description = "Suprabonds Phoenix server (production)";
+    wantedBy = [ "multi-user.target" ];
     after    = [ "network-online.target" "postgresql.service" ];
     wants    = [ "network-online.target" ];
-    requires = [ "postgresql.service" ];  # app uses Ecto/Postgres on localhost
+    requires = [ "postgresql.service" ];
 
-    path = [ pkgs.nix pkgs.git pkgs.bash ];  # services get a near-empty PATH
+    path = [ pkgs.nix pkgs.git pkgs.bash ];
+    environment.MIX_ENV = "prod";
 
     serviceConfig = {
       User = "tbrowne";
-      WorkingDirectory = "/home/tbrowne/code/suprabonds";
+      WorkingDirectory = "/home/tbrowne/deploy/suprabonds";
+      EnvironmentFile = "/home/tbrowne/.config/suprabonds/prod.env";
       ExecStart = "${pkgs.nix}/bin/nix develop --command mix phx.server";
       Restart = "always";
       RestartSec = 5;
@@ -367,13 +369,19 @@ in
     };
   };
 
-  # Lets scripts/deploy restart the production server without a password
+  # Lets scripts/deploy restart the production servers without a password
   security.sudo.extraRules = [{
     users = [ "tbrowne" ];
-    commands = [{
-      command = "/run/current-system/sw/bin/systemctl restart acyclic_research_prod";
-      options = [ "NOPASSWD" ];
-    }];
+    commands = [
+      {
+        command = "/run/current-system/sw/bin/systemctl restart acyclic_research_prod";
+        options = [ "NOPASSWD" ];
+      }
+      {
+        command = "/run/current-system/sw/bin/systemctl restart suprabonds_prod";
+        options = [ "NOPASSWD" ];
+      }
+    ];
   }];
   # ===== END: added by Claude (Claude Code) =====
 
